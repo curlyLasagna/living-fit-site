@@ -1,4 +1,4 @@
-version: '3'
+version: '3version: '3'
 services:
   postgres:
     image: postgres:17
@@ -10,6 +10,28 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      
+    networks:
+      - living-fit-network 
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: living-fit-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com 
+      PGADMIN_DEFAULT_PASSWORD: group6
+      PGADMIN_SERVER_MODE: False 
+    ports:
+      - "8080:80" 
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - living-fit-network 
+    depends_on:
+      - postgres 
+
 volumes:
   postgres_data:
+  pgadmin_data: 
+
+networks:
+  living-fit-network: 
