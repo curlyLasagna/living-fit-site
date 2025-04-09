@@ -21,7 +21,7 @@ services:
     ports:
       - "8080:80" 
     volumes:
-      - ./pgadmin_data:/var/lib/pgadmin/storage
+      - ./db:/var/lib/pgadmin/storage/
     networks:
       - living-fit-network 
     depends_on:
