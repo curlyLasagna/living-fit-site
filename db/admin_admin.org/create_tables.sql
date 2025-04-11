@@ -1,5 +1,7 @@
 -- I am vibe coding my way out of this one
 
+CREATE TYPE STATUS AS ENUM('active', 'terminated', 'cancelled');
+
 -- Table: LOCATIONS
 CREATE TABLE LOCATIONS (
     location_id SERIAL PRIMARY KEY,
@@ -18,7 +20,7 @@ CREATE TABLE MEMBERS (
     email VARCHAR(255),
     phone VARCHAR(20),
     join_date DATE,
-    membership_status VARCHAR(50),
+    membership_status STATUS,
     location_id INTEGER REFERENCES LOCATIONS(location_id)
 );
 
