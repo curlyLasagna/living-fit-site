@@ -39,7 +39,8 @@ CREATE TABLE QR_CODES (
     family_member_id INTEGER REFERENCES FAMILY_MEMBERS(family_member_id),
     location_id INTEGER REFERENCES LOCATIONS(location_id),
     status VARCHAR(50),
-    issue_date DATE
+    issue_date DATE,
+    uuid uuid NOT NULL DEFAULT gen_random_uuid()
 );
 
 -- Table: MEMBERSHIP_CHANGES
