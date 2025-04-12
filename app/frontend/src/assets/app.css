@@ -1,2 +1,83 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+:root {
+    color-scheme: light;
+    --primary-red: #dc2626;
+    /* Tailwind red-700 */
+    --secondary-red: #ef4444;
+    /* Tailwind red-500 */
+    --light-red: #fecaca;
+    /* Tailwind red-200 */
+    --primary-white: #ffffff;
+    /* Tailwind white */
+    --off-white: #f8fafc;
+    /* Tailwind gray-50 */
+    --dark-text: #1f2937;
+    /* Tailwind gray-800 */
+    --medium-text: #4b5563;
+    /* Tailwind gray-600 */
+    --light-text: #6b7280;
+    /* Tailwind gray-500 */
+}
+
+body {
+    @apply bg-[color:var(--primary-white)] text-[color:var(--dark-text)];
+}
+
+.text-primary {
+    color: var(--primary-red);
+}
+
+.text-secondary {
+    color: var(--secondary-red);
+}
+
+.bg-primary {
+    background-color: var(--primary-red);
+}
+
+.bg-secondary {
+    background-color: var(--secondary-red);
+}
+
+.bg-light {
+    background-color: var(--off-white);
+}
+
+.text-light {
+    color: var(--light-text);
+}
+
+/* Example button styles */
+.btn-primary {
+    @apply bg-[color:var(--primary-red)] text-[color:var(--primary-white)] px-6 py-3 rounded-md hover:bg-[color:var(--secondary-red)] transition-colors duration-200;
+}
+
+.btn-secondary {
+    @apply bg-[color:var(--secondary-red)] text-[color:var(--primary-white)] px-6 py-3 rounded-md hover:bg-[color:var(--primary-red)] transition-colors duration-200;
+}
+
+.btn-outline-red {
+    @apply border-2 border-[color:var(--primary-red)] text-[color:var(--primary-red)] px-6 py-3 rounded-md hover:bg-[color:var(--light-red)] hover:text-[color:var(--dark-text)] transition-colors duration-200;
+}
+
+.link-red {
+    @apply text-[color:var(--primary-red)] hover:text-[color:var(--secondary-red)] transition-colors duration-200;
+}
+
+/* Example card styles */
+.card {
+    @apply bg-[color:var(--primary-white)] rounded-lg shadow-md p-6;
+}
+
+/* Example input styles */
+.input {
+    @apply border border-[color:var(--light-text)] rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[color:var(--primary-red)] focus:border-transparent;
+    color: var(--dark-text);
+}
+
+/* Example container styles */
+.container {
+    @apply mx-auto px-4 py-8;
+}
