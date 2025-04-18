@@ -1,16 +1,44 @@
-<footer class="footer sm:footer-horizontal bg-base-300 text-base-content p-10">
-    <nav>
-        <h6 class="footer-title">Services</h6>
-        <a class="link link-hover">Branding</a>
-        <a class="link link-hover">Design</a>
-        <a class="link link-hover">Marketing</a>
-        <a class="link link-hover">Advertisement</a>
+<footer class="bg-gray-50 py-8">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div>
+        <h6 class="font-bold text-primary-red mb-4">Living Fit Club</h6>
+        <p class="text-dark-text text-sm">
+          Your fitness journey starts here. Join us and achieve your goals!
+        </p>
+        <div class="flex mt-4">
+          <a href="#" class="text-dark-text hover:text-secondary-red mr-4">
+            <i class="fa-brands fa-facebook fa-2x"></i>
+          </a>
+          <a href="#" class="text-dark-text hover:text-secondary-red">
+            <i class="fa-brands fa-twitter fa-2x"></i>
+          </a>
+        </div>
+      </div>
+
+      <nav class="flex flex-col">
+        <h6 class="font-bold text-primary-red mb-4">Services</h6>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Branding</a>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Design</a>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Marketing</a>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Advertisement</a>
       </nav>
-      <nav>
-        <h6 class="footer-title">Company</h6>
-        <a class="link link-hover">About us</a>
-        <a class="link link-hover">Contact</a>
-        <a class="link link-hover">Jobs</a>
-        <a class="link link-hover">Press kit</a>
+
+      <nav class="flex flex-col">
+        <h6 class="font-bold text-primary-red mb-4">Company</h6>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">About us</a>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Contact</a>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Jobs</a>
+        <a href="#" class="text-dark-text hover:text-secondary-red mb-2">Press kit</a>
       </nav>
+    </div>
+    <div class="text-center mt-8 text-dark-text text-sm">
+      &copy; {new Date().getFullYear()} Living Fit Club. All rights reserved.
+    </div>
+  </div>
 </footer>
+
+<style>
+  /* Add Font Awesome to the project */
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+</style>
