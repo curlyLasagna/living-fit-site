@@ -16,6 +16,7 @@ import {
 export const membershipStatus = pgEnum('membership_status', ['active', 'terminated', 'cancelled']);
 export const qrStatus = pgEnum('qr_status', ['active', 'revoked', 'expired']);
 export const reportStatus = pgEnum('report_status', ['open', 'in_progress', 'closed']);
+export const familyMemberActions = pgEnum('familyMemberActions', ['remove', 'add']);
 
 // LOCATIONS
 export const locations = pgTable('locations', {
@@ -123,4 +124,13 @@ export const staffLogs = pgTable('staff_logs', {
   action: varchar('action', { length: 255 }).notNull(),
   timestamp: timestamp('timestamp').defaultNow(),
   details: text('details'),
+});
+
+// FAMILY_MEMBER_LOGS
+export const familyMemberLogs = pgTable('family_member_logs', {
+  logId: serial('log_id').primaryKey(),
+  familyMemberId: integer('family_member_id').references(() => familyMembers.familyMemberId),
+  parentMemberId: integer('parent_member_id').references(() => members.memberId),
+  action: familyMemberActions('familyMemberActions').notNull(),
+  timestamp: timestamp('timestamp').defaultNow(),
 });
