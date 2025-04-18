@@ -88,7 +88,7 @@ export const membershipChanges = pgTable('membership_changes', {
 });
 
 // MODIFICATIONS
-export const modifications = pgTable('modifications', {
+export const member_modifications = pgTable('member_modifications', {
   modificationId: serial('modification_id').primaryKey(),
   memberId: integer('member_id').references(() => members.memberId),
   fieldModified: varchar('field_modified', { length: 255 }),
@@ -108,3 +108,19 @@ export const reports = pgTable('reports', {
   resolutionDate: date('resolution_date'),
 });
 
+// STAFF
+export const staff = pgTable('staff', {
+  staffId: serial('staff_id').primaryKey(),
+  username: varchar('username', { length: 255 }).notNull(),
+  password: varchar('password', { length: 255 }).notNull(),
+  accountCreated: timestamp('account_created').defaultNow(),
+});
+
+// STAFF_LOGS
+export const staffLogs = pgTable('staff_logs', {
+  logId: serial('log_id').primaryKey(),
+  staffId: integer('staff_id').references(() => staff.staffId),
+  action: varchar('action', { length: 255 }).notNull(),
+  timestamp: timestamp('timestamp').defaultNow(),
+  details: text('details'),
+});
