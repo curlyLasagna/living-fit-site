@@ -7,11 +7,6 @@ export default {
   out: './migrations',
   dialect: 'postgresql',
   dbCredentials: {
-    host: 'localhost',
-    port: 5432,
-    ssl: false,
-    user: "admin",
-    password: "group6",
-    database: "living_fit",
-  },
+    url: process.env.DB_URL ?? "postgresql://admin:group6@localhost:5432/living_fit"
+  }
 } satisfies Config;
