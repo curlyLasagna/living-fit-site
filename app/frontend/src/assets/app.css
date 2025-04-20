@@ -1,22 +1,22 @@
 @import "tailwindcss";
-@plugin "daisyui"; 
+@plugin "daisyui";
 @plugin "daisyui/theme" {
   name: "livingFitTheme";
-  default: true; /* set as default */
-  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
-  color-scheme: light; /* color of browser-provided UI */
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
 
-  --color-primary: #dc2626; /* Primary red */
-  --color-secondary: #ef4444; /* Secondary red */
-  --color-accent: #fecaca; /* Light red */
-  --color-neutral: #1f2937; /* Dark text */
-  --color-base-100: #ffffff; /* Primary white */
-  --color-base-200: #f8fafc; /* Off-white */
-  --color-base-content: #4b5563; /* Medium text */
-  --color-info: #6b7280; /* Light text */
-  --color-success: #10b981; /* Tailwind green-500 */
-  --color-warning: #f59e0b; /* Tailwind yellow-500 */
-  --color-error: #ef4444; /* Secondary red */
+  --color-primary: #dc2626;
+  --color-secondary: #ef4444;
+  --color-accent: #fecaca;
+  --color-neutral: #1f2937;
+  --color-base-100: #ffffff;
+  --color-base-200: #f8fafc;
+  --color-base-content: #4b5563;
+  --color-info: #6b7280;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 }
 
 :root {
