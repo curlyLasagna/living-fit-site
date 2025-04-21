@@ -1,0 +1,15 @@
+{
+  "name": "dockerize-node-app",
+  "version": "1.0.0",
+  "description": "This is an appication to test the process of dockerizing a simple Node JS application.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js --watch"
+  },
+  "author": "Dasun Wickramasooriya @dasunwickr",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
