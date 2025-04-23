@@ -47,7 +47,7 @@ export const feeChanges = pgTable('fee_changes', {
   feeType: varchar('fee_type', { length: 50 }),
   oldValue: decimal('old_value'),
   newValue: decimal('new_value'),
-  changeDate: timestamp('change_date'),
+  changeDate: timestamp('change_date').notNull().defaultNow(),
 });
 export type FeeChange = InferSelectModel<typeof feeChanges>;
 export type NewFeeChange = InferInsertModel<typeof feeChanges>;
@@ -60,7 +60,7 @@ export const members = pgTable('members', {
   email: varchar('email', { length: 255 }),
   phone: varchar('phone', { length: 20 }),
   password: varchar('password', { length: 255 }),
-  joinDate: date('join_date'),
+  joinDate: date('join_date').notNull().defaultNow(),
   membershipStatus: membershipStatus('membership_status'),
   locationId: integer('location_id').references(() => locations.locationId),
 });
@@ -85,7 +85,7 @@ export const qrCodes = pgTable('qr_codes', {
   familyMemberId: integer('family_member_id').references(() => familyMembers.familyMemberId),
   locationId: integer('location_id').references(() => locations.locationId),
   status: qrStatus('status'),
-  issueDate: date('issue_date'),
+  issueDate: date('issue_date').notNull().defaultNow(),
   uuid: uuid('uuid'),
 });
 export type QrCode = InferSelectModel<typeof qrCodes>;
@@ -98,7 +98,7 @@ export const membershipChanges = pgTable('membership_changes', {
   changeType: varchar('change_type', { length: 50 }),
   oldValue: text('old_value'),
   newValue: text('new_value'),
-  changeDate: date('change_date'),
+  changeDate: date('change_date').notNull().defaultNow(),
 });
 export type MembershipChange = InferSelectModel<typeof membershipChanges>;
 export type NewMembershipChange = InferInsertModel<typeof membershipChanges>;
@@ -110,7 +110,7 @@ export const member_modifications = pgTable('member_modifications', {
   fieldModified: varchar('field_modified', { length: 255 }),
   oldValue: text('old_value'),
   newValue: text('new_value'),
-  modificationDate: timestamp('modification_date'),
+  modificationDate: timestamp('modification_date').notNull().defaultNow(),
 });
 export type MemberModification = InferSelectModel<typeof member_modifications>;
 export type NewMemberModification = InferInsertModel<typeof member_modifications>;
@@ -122,7 +122,7 @@ export const reports = pgTable('reports', {
   locationId: integer('location_id').references(() => locations.locationId),
   issueDescription: text('issue_description'),
   status: reportStatus('status'),
-  submissionDate: date('submission_date'),
+  submissionDate: date('submission_date').notNull().defaultNow(),
   resolutionDate: date('resolution_date'),
 });
 export type Report = InferSelectModel<typeof reports>;
