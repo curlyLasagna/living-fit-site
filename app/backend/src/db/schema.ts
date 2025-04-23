@@ -18,6 +18,15 @@ export const membershipStatus = pgEnum('membership_status', ['active', 'terminat
 export const qrStatus = pgEnum('qr_status', ['active', 'revoked', 'expired']);
 export const reportStatus = pgEnum('report_status', ['open', 'in_progress', 'closed']);
 export const familyMemberActions = pgEnum('familyMemberActions', ['remove', 'add']);
+export const modificationTypes = pgEnum('modification_types', [
+  'personal_info',
+  'contact_info',
+  'membership_status',
+  'payment_info',
+  'location_change',
+  'password_change',
+  'family_member_update'
+]);
 
 // LOCATIONS
 export const locations = pgTable('locations', {
@@ -107,11 +116,13 @@ export type NewMembershipChange = InferInsertModel<typeof membershipChanges>;
 export const member_modifications = pgTable('member_modifications', {
   modificationId: serial('modification_id').primaryKey(),
   memberId: integer('member_id').references(() => members.memberId),
-  fieldModified: varchar('field_modified', { length: 255 }),
+  modificationType: modificationTypes('modification_type').notNull(),
+  fieldModified: varchar('field_modified', { length: 255 }).notNull(),
   oldValue: text('old_value'),
   newValue: text('new_value'),
-  modificationDate: timestamp('modification_date'),
+  modificationDate: timestamp('modification_date').defaultNow(),
 });
+
 export type MemberModification = InferSelectModel<typeof member_modifications>;
 export type NewMemberModification = InferInsertModel<typeof member_modifications>;
 
@@ -159,3 +170,18 @@ export const familyMemberLogs = pgTable('family_member_logs', {
 });
 export type FamilyMemberLog = InferSelectModel<typeof familyMemberLogs>;
 export type NewFamilyMemberLog = InferInsertModel<typeof familyMemberLogs>;
+
+// PAYMENT_INFORMATION
+export const paymentInformation = pgTable('payment_information', {
+  paymentInfoId: serial('payment_info_id').primaryKey(),
+  memberId: integer('member_id').references(() => members.memberId).unique(),
+  cardHolderName: varchar('card_holder_name', { length: 255 }).notNull(),
+  cardNumberLastFour: varchar('card_number_last_four', { length: 4 }).notNull(),
+  expirationMonth: varchar('expiration_month', { length: 2 }).notNull(),
+  expirationYear: varchar('expiration_year', { length: 4 }).notNull(),
+  billingAddress: varchar('billing_address', { length: 255 }).notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow(),
+});
+export type PaymentInformation = InferSelectModel<typeof paymentInformation>;
+export type NewPaymentInformation = InferInsertModel<typeof paymentInformation>;
