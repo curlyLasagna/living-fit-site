@@ -59,7 +59,7 @@ export const members = pgTable('members', {
   address: varchar('address', { length: 255 }),
   email: varchar('email', { length: 255 }),
   phone: varchar('phone', { length: 20 }),
-  password: varchar('password_hash', { length: 255 }),
+  password: varchar('password', { length: 255 }),
   joinDate: date('join_date'),
   membershipStatus: membershipStatus('membership_status'),
   locationId: integer('location_id').references(() => locations.locationId),
