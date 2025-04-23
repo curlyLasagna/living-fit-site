@@ -1,0 +1,31 @@
+<dialog id="login_modal" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Log In</h3>
+    <form method="post" class="py-4">
+      <div class="flex flex-col items-center">
+        <div class="form-control w-full max-w-xs">
+          <label for="username" class="label">
+            <span class="label-text">Username</span>
+          </label>
+          <input type="text" id="username" name="username" class="input input-bordered w-full" required />
+        </div>
+        <div class="form-control w-full max-w-xs mt-4">
+          <label for="password" class="label">
+            <span class="label-text">Password</span>
+          </label>
+          <input type="password" id="password" name="password" class="input input-bordered w-full" required />
+        </div>
+        <div class="form-control mt-4">
+          <label class="cursor-pointer flex items-center">
+            <input type="checkbox" name="save_username" class="checkbox" />
+            <span class="label-text ml-2">Save username</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-action mt-4">
+        <button type="submit" class="btn btn-primary">Log In</button>
+        <button type="button" class="btn" onclick="document.getElementById('login_modal').close()">Close</button>
+      </div>
+    </form>
+  </div>
+</dialog>

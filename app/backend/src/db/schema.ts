@@ -11,6 +11,7 @@ import {
   pgEnum,
   text,
 } from 'drizzle-orm/pg-core';
+import type { InferSelectModel, InferInsertModel } from 'drizzle-orm';
 
 // Enums
 export const membershipStatus = pgEnum('membership_status', ['active', 'terminated', 'cancelled']);
@@ -24,6 +25,8 @@ export const locations = pgTable('locations', {
   name: varchar('name', { length: 255 }),
   address: varchar('address', { length: 255 }),
 });
+export type Location = InferSelectModel<typeof locations>;
+export type NewLocation = InferInsertModel<typeof locations>;
 
 // FEES
 export const fees = pgTable('fees', {
@@ -34,6 +37,8 @@ export const fees = pgTable('fees', {
   annualFee: decimal('annual_fee'),
   effectiveDate: date('effective_date'),
 });
+export type Fee = InferSelectModel<typeof fees>;
+export type NewFee = InferInsertModel<typeof fees>;
 
 // FEE_CHANGES
 export const feeChanges = pgTable('fee_changes', {
@@ -44,6 +49,8 @@ export const feeChanges = pgTable('fee_changes', {
   newValue: decimal('new_value'),
   changeDate: timestamp('change_date'),
 });
+export type FeeChange = InferSelectModel<typeof feeChanges>;
+export type NewFeeChange = InferInsertModel<typeof feeChanges>;
 
 // MEMBERS
 export const members = pgTable('members', {
@@ -52,11 +59,13 @@ export const members = pgTable('members', {
   address: varchar('address', { length: 255 }),
   email: varchar('email', { length: 255 }),
   phone: varchar('phone', { length: 20 }),
-  passwordHash: varchar('password_hash', { length: 255 }),
+  password: varchar('password', { length: 255 }),
   joinDate: date('join_date'),
   membershipStatus: membershipStatus('membership_status'),
   locationId: integer('location_id').references(() => locations.locationId),
 });
+export type Member = InferSelectModel<typeof members>;
+export type NewMember = InferInsertModel<typeof members>;
 
 // FAMILY_MEMBERS
 export const familyMembers = pgTable('family_members', {
@@ -66,6 +75,8 @@ export const familyMembers = pgTable('family_members', {
   name: varchar('name', { length: 255 }),
   qrCodeUuid: uuid('qr_code_uuid'),
 });
+export type FamilyMember = InferSelectModel<typeof familyMembers>;
+export type NewFamilyMember = InferInsertModel<typeof familyMembers>;
 
 // QR_CODES
 export const qrCodes = pgTable('qr_codes', {
@@ -77,6 +88,8 @@ export const qrCodes = pgTable('qr_codes', {
   issueDate: date('issue_date'),
   uuid: uuid('uuid'),
 });
+export type QrCode = InferSelectModel<typeof qrCodes>;
+export type NewQrCode = InferInsertModel<typeof qrCodes>;
 
 // MEMBERSHIP_CHANGES
 export const membershipChanges = pgTable('membership_changes', {
@@ -87,6 +100,8 @@ export const membershipChanges = pgTable('membership_changes', {
   newValue: text('new_value'),
   changeDate: date('change_date'),
 });
+export type MembershipChange = InferSelectModel<typeof membershipChanges>;
+export type NewMembershipChange = InferInsertModel<typeof membershipChanges>;
 
 // MODIFICATIONS
 export const member_modifications = pgTable('member_modifications', {
@@ -97,6 +112,8 @@ export const member_modifications = pgTable('member_modifications', {
   newValue: text('new_value'),
   modificationDate: timestamp('modification_date'),
 });
+export type MemberModification = InferSelectModel<typeof member_modifications>;
+export type NewMemberModification = InferInsertModel<typeof member_modifications>;
 
 // REPORTS
 export const reports = pgTable('reports', {
@@ -108,6 +125,8 @@ export const reports = pgTable('reports', {
   submissionDate: date('submission_date'),
   resolutionDate: date('resolution_date'),
 });
+export type Report = InferSelectModel<typeof reports>;
+export type NewReport = InferInsertModel<typeof reports>;
 
 // STAFF
 export const staff = pgTable('staff', {
@@ -116,6 +135,8 @@ export const staff = pgTable('staff', {
   password: varchar('password', { length: 255 }).notNull(),
   accountCreated: timestamp('account_created').defaultNow(),
 });
+export type Staff = InferSelectModel<typeof staff>;
+export type NewStaff = InferInsertModel<typeof staff>;
 
 // STAFF_LOGS
 export const staffLogs = pgTable('staff_logs', {
@@ -125,6 +146,8 @@ export const staffLogs = pgTable('staff_logs', {
   timestamp: timestamp('timestamp').defaultNow(),
   details: text('details'),
 });
+export type StaffLog = InferSelectModel<typeof staffLogs>;
+export type NewStaffLog = InferInsertModel<typeof staffLogs>;
 
 // FAMILY_MEMBER_LOGS
 export const familyMemberLogs = pgTable('family_member_logs', {
@@ -134,3 +157,5 @@ export const familyMemberLogs = pgTable('family_member_logs', {
   action: familyMemberActions('familyMemberActions').notNull(),
   timestamp: timestamp('timestamp').defaultNow(),
 });
+export type FamilyMemberLog = InferSelectModel<typeof familyMemberLogs>;
+export type NewFamilyMemberLog = InferInsertModel<typeof familyMemberLogs>;
