@@ -9,7 +9,7 @@ import Layout from "../layouts/Layout.astro";
       <h2 class="text-2xl font-bold text-primary-red mb-6 text-center">
         Join the Living Fit Club!
       </h2>
-      <form target="/success" method="post" action="http://localhost:3000/api/user/register" enctype="application/x-www-form-urlencoded">
+      <form id="signup-form">
   <div class="mb-4">
     <label class="block text-dark-text text-sm font-bold mb-2" for="firstName">
       First Name
@@ -110,5 +110,38 @@ import Layout from "../layouts/Layout.astro";
       </p>
     </div>
   </div>
-
 </Layout>
+
+<script>
+const form = document.querySelector<HTMLFormElement>('#signup-form');
+  if (form) {
+    form.addEventListener('submit', async (e: SubmitEvent) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries())
+
+      try {
+        const response = await fetch('http://localhost:3000/api/user/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok && response.status === 201) {
+          window.location.href = '/success';
+        } else {
+          const message = await response.text();
+          alert(`Registration failed: ${message}`);
+        }
+      } catch (err) {
+        console.error('Network error:', err);
+      }
+    });
+  } else {
+    console.error('Register form not found');
+  }
+</script>
+

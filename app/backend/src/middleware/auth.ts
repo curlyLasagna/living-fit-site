@@ -1,3 +1,5 @@
+import type { Request, Response } from 'express';
+import type { NextFunction } from 'express';
 import JWT from 'jsonwebtoken';
 
 const JWT_CONFIG: JWT.SignOptions = {
@@ -23,3 +25,8 @@ export function verifyToken(token: string) {
         throw new Error('UNAUTHORIZED: Invalid token');
     }
 }
+
+export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+    // TODO: Implement proper authentication
+    next();
+};
