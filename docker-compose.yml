@@ -25,7 +25,14 @@ services:
     networks:
       - living-fit-network 
     depends_on:
-      - postgres 
+      - postgres
+
+  express:
+    image: living-fit-express 
+    build:
+      context: ./app/backend
+    networks: 
+    - living-fit-network   
 
 volumes:
   postgres_data: {}
