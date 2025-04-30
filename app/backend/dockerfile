@@ -1,0 +1,22 @@
+# Use a specific node version instead of slim for better version control
+FROM node:20.11-slim
+
+# Set working directory
+WORKDIR /app
+
+ENV NODE_ENV=development
+ENV PATH=/app/node_modules/.bin:$PATH
+# Copy package files
+COPY package*.json ./
+
+# Copy application code
+COPY ./src ./src
+
+# Install dependencies
+RUN npm install --include=dev && npm cache clean --force
+
+# Expose port
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "run", "dev"]
