@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "db-push": "drizzle-kit push --config=drizzle.config.ts"
   },
   "keywords": [],
   "author": "",
