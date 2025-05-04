@@ -122,3 +122,5 @@ router.get('/:memberId/modifications', authenticateToken, async (req, res) => {
         res.status(500).json({ message: 'Error fetching member modifications' });
     }
 });
+
+export default router;
