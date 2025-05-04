@@ -12,7 +12,7 @@ import {
     type QrCode,
     type NewQrCode,
     type MembershipChange
-} from '../db/schema';
+} from '../schema';
 import { db } from '../utils/db';
 import { eq, and, desc } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';

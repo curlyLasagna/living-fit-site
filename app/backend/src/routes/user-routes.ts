@@ -1,5 +1,4 @@
 import express from 'express';
-import type { Request, Response } from 'express';
 import { authenticateToken } from '../middleware/auth';
 import * as userServices from '../services/user-services';
 import { handleAddMember } from '../controllers/user-controller';
