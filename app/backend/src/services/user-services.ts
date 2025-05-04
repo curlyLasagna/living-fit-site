@@ -12,7 +12,7 @@ import {
     type QrCode,
     type NewQrCode,
     type MembershipChange
-} from '../db/schema';
+} from '../schema';
 import { db } from '../utils/db';
 import { eq, and, desc } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
@@ -31,7 +31,8 @@ export async function addMember(user: NewMember) {
         password: hash
     }).returning({
         member_id: members.memberId,
-        name: members.name,
+        fname: members.fname,
+        lname: members.lname,
         address: members.address,
         email: members.email,
         phone: members.phone,
