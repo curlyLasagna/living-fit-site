@@ -2,26 +2,32 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsx watch src/server.ts --include src/",
+    "db-push": "drizzle-kit push --config=drizzle.config.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.7.1",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.41.0",
     "drizzle-seed": "^0.3.1",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.14.1",
-    "postgres": "^3.4.5"
+    "ts-node": "^10.9.2",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.6",
+    "nodemon": "^3.1.10",
     "tsx": "^4.19.3"
   }
 }

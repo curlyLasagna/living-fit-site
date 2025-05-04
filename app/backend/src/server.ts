@@ -1,7 +1,17 @@
 import express from 'express'
+import routes from './routes/routes'
+import cors from "cors";
+
 
 const app = express()
 const port = 3000
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+  origin: 'http://localhost:4321',
+  methods: ["GET", "POST"],
+  credentials: false
+}));
 
 app.get('/', (req, res) => {
   res.json({
@@ -10,5 +20,15 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Living Fit Club API running at port ${port}`)
 })
+
+// Add this to log which routes are being accessed
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
+// Use route resolver
+app.use('/api', routes);

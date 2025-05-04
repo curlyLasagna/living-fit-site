@@ -1,3 +1,6 @@
+---
+import ModalLogin from "./Modal_Login.astro";
+---
 <div class="navbar shadow-sm bg-gray-50">
   <div class="navbar-start">
     <div class="dropdown">
@@ -38,6 +41,8 @@
     </ul>
   </div>
   <div class="navbar-end">
-    <a class="btn bg-[color:var(--primary-red)] text-[color:var(--primary-white)] hover:bg-[color:var(--secondary-red)]" href="/signup">Join Now</a>
+    <a class="btn btn-primary mr-2" href="/signup">Join Now</a>
+    <button onclick="login_modal.showModal()" class="btn btn-primary">Log in</button>
+    <ModalLogin/>
   </div>
 </div>

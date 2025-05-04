@@ -2,15 +2,10 @@ import 'dotenv/config';
 import type { Config } from 'drizzle-kit';
 
 export default {
-  schema: './src/db/schema.ts',
-  out: './src/db/migrations',
+  schema: './src/schema.ts',
+  out: './migrations',
   dialect: 'postgresql',
   dbCredentials: {
-    host: 'localhost',
-    port: 5432,
-    ssl: false,
-    user: "admin",
-    password: "group6",
-    database: "living_fit",
-  },
+    url: process.env.DB_URL ?? "postgresql://admin:group6@localhost:5432/living_fit"
+  }
 } satisfies Config;

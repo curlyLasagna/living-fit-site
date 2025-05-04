@@ -9,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.7.1"
+  "packageManager": "pnpm@10.7.1",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^11.1.0"
+  }
 }
