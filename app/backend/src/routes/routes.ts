@@ -5,3 +5,5 @@ export default createRouter((router: Router) => {
     // router.use('/admin', adminRoutes);
     router.use('/user', userRoutes);
 });
+
+

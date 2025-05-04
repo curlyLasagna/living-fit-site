@@ -62,16 +62,17 @@ export type FeeChange = InferSelectModel<typeof feeChanges>;
 export type NewFeeChange = InferInsertModel<typeof feeChanges>;
 
 // MEMBERS
-export const members = pgTable('members', {
-  memberId: serial('member_id').primaryKey(),
-  name: varchar('name', { length: 255 }),
-  address: varchar('address', { length: 255 }),
-  email: varchar('email', { length: 255 }),
-  phone: varchar('phone', { length: 20 }),
-  password: varchar('password', { length: 255 }),
-  joinDate: date('join_date').notNull().defaultNow(),
-  membershipStatus: membershipStatus('membership_status'),
-  locationId: integer('location_id').references(() => locations.locationId),
+export const members = pgTable("members", {
+  memberId: serial("member_id").primaryKey(),
+  fname: varchar("fname", { length: 255 }),
+  lname: varchar("lname", { length: 255 }),
+  address: varchar("address", { length: 255 }),
+  email: varchar("email", { length: 255 }),
+  phone: varchar("phone", { length: 20 }),
+  password: varchar("password", { length: 255 }),
+  joinDate: date("join_date"),
+  membershipStatus: membershipStatus("membership_status"),
+  locationId: integer("location_id").references(() => locations.locationId),
 });
 export type Member = InferSelectModel<typeof members>;
 export type NewMember = InferInsertModel<typeof members>;

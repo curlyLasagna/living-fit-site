@@ -21,6 +21,9 @@ services:
       PGADMIN_DEFAULT_PASSWORD: postgres
     ports:
       - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    user: "${UID:-5050}:${GID:-5050}"
     networks:
       - living-fit-network
     depends_on:
@@ -47,6 +50,7 @@ services:
 
 volumes:
   postgres_data: {}
+  pgadmin_data: {}
 
 networks:
   living-fit-network: {}
