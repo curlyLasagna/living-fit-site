@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:17
+    container_name: living-fit-postgres
     environment:
       POSTGRES_PASSWORD: group6
       POSTGRES_USER: admin
@@ -10,22 +11,39 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - living-fit-network 
+      - living-fit-network
 
   pgadmin:
     image: dpage/pgadmin4
     container_name: living-fit-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.org 
+      PGADMIN_DEFAULT_EMAIL: admin@admin.org
       PGADMIN_DEFAULT_PASSWORD: postgres
     ports:
-      - "8080:80" 
-    volumes:
-      - ./db:/var/lib/pgadmin/storage/
+      - "8080:80"
     networks:
-      - living-fit-network 
+      - living-fit-network
     depends_on:
-      - postgres 
+      - postgres
+
+  express:
+    container_name: living-fit-express
+    image: living-fit-express:latest
+    build:
+      context: ./app/backend
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "3000:3000"
+    volumes:
+      # bind mount to reflect changes
+      - ./app/backend/src:/app/src
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - living-fit-network
 
 volumes:
   postgres_data: {}
