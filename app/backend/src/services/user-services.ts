@@ -1,21 +1,17 @@
 import bcrypt from "bcryptjs";
+import { desc, eq } from 'drizzle-orm';
+import { v4 as uuidv4 } from 'uuid';
 import {
-    members,
-    familyMembers,
-    qrCodes,
-    membershipChanges,
-    member_modifications,
     type Member,
-    type NewMember,
-    type FamilyMember,
     type NewFamilyMember,
-    type QrCode,
-    type NewQrCode,
-    type MembershipChange
+    type NewMember,
+    familyMembers,
+    member_modifications,
+    members,
+    membershipChanges,
+    qrCodes
 } from '../schema';
 import { db } from '../utils/db';
-import { eq, and, desc } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
 
 export async function addMember(user: NewMember) {
     const saltRounds = 5;
