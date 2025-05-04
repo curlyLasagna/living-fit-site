@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "dev": "tsx watch src/server.ts --include src/",
-    "db-push": "drizzle-kit push --config=drizzle.config.ts"
+    "db-push": "drizzle-kit push --config=drizzle.config.ts",
+    "db-seed": "tsx src/seed.ts"
   },
   "keywords": [],
   "author": "",
