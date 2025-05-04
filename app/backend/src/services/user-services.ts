@@ -17,7 +17,8 @@ export async function addMember(user: NewMember) {
         password: hash
     }).returning({
         member_id: members.memberId,
-        name: members.name,
+        fname: members.fname,
+        lname: members.lname,
         address: members.address,
         email: members.email,
         phone: members.phone,

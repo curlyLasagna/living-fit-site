@@ -22,4 +22,13 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Living Fit Club API running at port ${port}`)
 })
+
+// Add this to log which routes are being accessed
+
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
+
+// Use route resolver
 app.use('/api', routes);

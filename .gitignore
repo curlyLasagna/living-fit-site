@@ -30,3 +30,4 @@ venv
 docs.zip
 archive.zip
 node_modules/
+.qodo
