@@ -1,4 +1,3 @@
-// .drizzle.config.ts
 import 'dotenv/config';
 import type { Config } from 'drizzle-kit';
 
