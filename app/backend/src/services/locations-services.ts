@@ -1,5 +1,4 @@
 import { db } from '../utils/db';
-import express from 'express';
 import { locations } from '../schema';
 import type { NewLocation } from '../schema';
 import { eq } from 'drizzle-orm';

@@ -1,168 +1,61 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PersonalDetailsForm from "../components/PersonalDetailsForm.astro";
+import PricingSection from "../components/PricingSection";
+// Handle form submission on the server
+if (Astro.request.method === "POST") {
+	const formData = await Astro.request.formData();
+	const data = Object.fromEntries(formData.entries());
+
+	// You can now send this data to your API or handle it as needed
+	const response = await fetch("http://localhost:3000/api/user/register", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(data),
+	});
+
+	if (response.ok && response.status === 201) {
+		// Redirect to success page
+		return Astro.redirect("/success");
+	}
+	const message = await response.text();
+	// You can set an error variable here to display in the UI
+	throw new Error(`Registration failed: ${message}`);
+}
 ---
 
 <Layout>
-
   <div class="flex items-center justify-center min-h-screen bg-off-white">
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
       <h2 class="text-2xl font-bold text-primary-red mb-6 text-center">
         Join the Living Fit Club!
       </h2>
 
-      <div class="mb-8 p-4 border-2 border-primary-red rounded-lg">
-        <h3 class="text-xl font-bold text-primary-red mb-4 text-center">Membership Pricing</h3>
-        <div class="space-y-2">
-          <div class="flex justify-between items-center">
-            <span class="text-dark-text">Joining Fee (due today)</span>
-            <span class="font-bold text-primary-red">$39</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-dark-text">Monthly Fee (starts May 29, 2025)</span>
-            <span class="font-bold text-primary-red">$12.95</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-dark-text">Annual Fee (due April 29, 2026)</span>
-            <span class="font-bold text-primary-red">$39</span>
-          </div>
+      <PricingSection client:load/>
+      <form id="signup-form" method="post">
+        <PersonalDetailsForm/>
+        <!-- Hidden input to include the selected location in the form submission -->
+        <input
+          type="hidden"
+          name="locationId"
+          onchange=""
+        />
+        <div class="flex items-center justify-between">
+          <button class="btn btn-primary" type="submit">
+            Sign Up
+          </button>
+          <a
+            class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer"
+            onclick="login_modal.showModal()"
+          >
+            Already have an account?
+          </a>
         </div>
-        <div class="mt-4 pt-4 border-t border-gray-200">
-          <p class="text-sm text-dark-text text-center">The joining fee is non-refundable and will be charged immediately upon signup</p>
-        </div>
-      </div>
-      <form id="signup-form">
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="firstName">
-      First Name
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="firstName"
-      name="firstName"
-      type="text"
-      placeholder="First Name"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="lastName">
-      Last Name
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="lastName"
-      name="lastName"
-      type="text"
-      placeholder="Last Name"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="email">
-      Email
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="email"
-      name="email"
-      type="email"
-      placeholder="Email"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="password">
-      Password
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="password"
-      name="password"
-      type="password"
-      placeholder="Password"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="address">
-      Address
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="address"
-      name="address"
-      type="text"
-      placeholder="Address"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="phone">
-      Phone Number
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="phone"
-      name="phone"
-      type="tel"
-      placeholder="Phone Number"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="dob">
-      Date of Birth
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="dob"
-      name="dob"
-      type="date"
-    />
-  </div>
-  <div class="flex items-center justify-between">
-    <button
-      class="btn btn-primary"
-      type="submit"
-    >
-      Sign Up
-    </button>
-    <a class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer" onclick="login_modal.showModal()">
-      Already have an account?
-    </a>
-  </div>
-</form>
+      </form>
+
       <p class="text-center text-dark-text text-xs mt-4">
         &copy; {new Date().getFullYear()} Living Fit Club. All rights reserved.
       </p>
     </div>
   </div>
 </Layout>
-
-<script>
-const form = document.querySelector<HTMLFormElement>('#signup-form');
-  if (form) {
-    form.addEventListener('submit', async (e: SubmitEvent) => {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries())
-
-      try {
-        const response = await fetch('http://localhost:3000/api/user/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok && response.status === 201) {
-          window.location.href = '/success';
-        } else {
-          const message = await response.text();
-          alert(`Registration failed: ${message}`);
-        }
-      } catch (err) {
-        console.error('Network error:', err);
-      }
-    });
-  } else {
-    console.error('Register form not found');
-  }
-</script>
-

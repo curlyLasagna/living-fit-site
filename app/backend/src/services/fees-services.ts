@@ -37,7 +37,8 @@ export async function deleteFee(id: number) {
     return deleted[0] || null;
 }
 
-// Get all fees for a specific location
+// Get the first fee for a specific location
 export async function getFeesByLocation(locationId: number) {
-    return db.select().from(fees).where(eq(fees.locationId, locationId));
+    const result = await db.select().from(fees).where(eq(fees.locationId, locationId)).limit(1);
+    return result[0] || null;
 }
