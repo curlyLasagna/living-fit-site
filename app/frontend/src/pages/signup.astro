@@ -1,27 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PersonalDetailsForm from "../components/PersonalDetailsForm.astro";
 import PricingSection from "../components/PricingSection";
-// Handle form submission on the server
-if (Astro.request.method === "POST") {
-	const formData = await Astro.request.formData();
-	const data = Object.fromEntries(formData.entries());
-
-	// You can now send this data to your API or handle it as needed
-	const response = await fetch("http://localhost:3000/api/user/register", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-	});
-
-	if (response.ok && response.status === 201) {
-		// Redirect to success page
-		return Astro.redirect("/success");
-	}
-	const message = await response.text();
-	// You can set an error variable here to display in the UI
-	throw new Error(`Registration failed: ${message}`);
-}
+import { LocationDropDown } from "@/components/LocationDropDown";
 ---
 
 <Layout>
@@ -30,32 +10,112 @@ if (Astro.request.method === "POST") {
       <h2 class="text-2xl font-bold text-primary-red mb-6 text-center">
         Join the Living Fit Club!
       </h2>
-
       <PricingSection client:load/>
-      <form id="signup-form" method="post">
-        <PersonalDetailsForm/>
-        <!-- Hidden input to include the selected location in the form submission -->
-        <input
-          type="hidden"
-          name="locationId"
-          onchange=""
-        />
-        <div class="flex items-center justify-between">
-          <button class="btn btn-primary" type="submit">
-            Sign Up
-          </button>
-          <a
-            class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer"
-            onclick="login_modal.showModal()"
-          >
-            Already have an account?
-          </a>
-        </div>
-      </form>
-
+  <form id="signup-form" method="post" >
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="firstName">
+      First Name
+    </label>
+    <input
+      id="firstName"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="fname"
+      type="text"
+      placeholder="First Name"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="lastName">
+      Last Name
+    </label>
+    <input
+      id="lastName"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="lname"
+      type="text"
+      placeholder="Last Name"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="email">
+      Email
+    </label>
+    <input
+      id="email"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="email"
+      type="email"
+      placeholder="Email"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="password">
+      Password
+    </label>
+    <input
+      id="password"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="password"
+      type="password"
+      placeholder="Password"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="location">
+      Location
+    </label>
+    <LocationDropDown client:load/>
+  </div>
+  <div class="flex items-center justify-between">
+    <button class="btn btn-primary" type="submit">
+      Sign Up
+    </button>
+    <a
+      class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer"
+      onclick="login_modal.showModal()"
+    >
+      Already have an account?
+    </a>
+  </div>
+</form>
       <p class="text-center text-dark-text text-xs mt-4">
         &copy; {new Date().getFullYear()} Living Fit Club. All rights reserved.
       </p>
     </div>
   </div>
 </Layout>
+
+<script>
+  import { selected_location } from "@/store";
+
+  const form: HTMLFormElement | null = document.querySelector("#signup-form");
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      // Set locationId
+      data.locationId = selected_location.get().locationId
+      console.log("Data sent", data)
+      try {
+        const response = await fetch("http://localhost:3000/api/user/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok && response.status === 201) {
+          window.location.href = "/success";
+        } else {
+          const message = await response.text();
+          alert(`Registration failed: ${message}`);
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+      }
+    });
+  } else {
+    console.error("Form not found");
+  }
+</script>
