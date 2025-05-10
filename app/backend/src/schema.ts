@@ -70,7 +70,7 @@ export const members = pgTable("members", {
   email: varchar("email", { length: 255 }),
   phone: varchar("phone", { length: 20 }),
   password: varchar("password", { length: 255 }),
-  joinDate: date("join_date"),
+  joinDate: date("join_date").notNull().defaultNow(),
   membershipStatus: membershipStatus("membership_status"),
   locationId: integer("location_id").references(() => locations.locationId),
 });
