@@ -1,22 +1,20 @@
 import bcrypt from "bcryptjs";
+import { desc, eq } from 'drizzle-orm';
+import { v4 as uuidv4 } from 'uuid';
 import {
-    members,
-    familyMembers,
-    qrCodes,
-    membershipChanges,
-    member_modifications,
     type Member,
-    type NewMember,
-    type FamilyMember,
     type NewFamilyMember,
-    type QrCode,
-    type NewQrCode,
-    type MembershipChange
+    type NewMember,
+    familyMembers,
+    member_modifications,
+    members,
+    membershipChanges,
+    qrCodes
 } from '../schema';
 import { db } from '../utils/db';
-import { eq, and, desc } from 'drizzle-orm';
-import { v4 as uuidv4 } from 'uuid';
+import generateToken from "../middleware/auth";
 
+// User Registration
 export async function addMember(user: NewMember) {
     const saltRounds = 5;
     const { password, ...memberDetails } = user
@@ -28,9 +26,10 @@ export async function addMember(user: NewMember) {
     const hash = await bcrypt.hash(password, saltRounds);
     const [newMember] = await db.insert(members).values({
         ...memberDetails,
-        password: hash
+        password: hash,
+        membershipStatus: memberDetails.membershipStatus || 'active'
     }).returning({
-        member_id: members.memberId,
+        memberId: members.memberId,
         fname: members.fname,
         lname: members.lname,
         address: members.address,
@@ -42,6 +41,31 @@ export async function addMember(user: NewMember) {
     })
 
     return { member: newMember }
+}
+
+export async function login(email: string, password: string) {
+    if (!email) {
+        throw new Error('Email is required');
+    }
+    const found_user = await db.select()
+        .from(members)
+        .where(
+            eq(members.email, email)
+        );
+
+    const user = found_user[0];
+    if (!user || !user.password) {
+        throw new Error('Invalid credentials');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+        throw new Error('Invalid credentials');
+    }
+
+    const token = generateToken(user.memberId.toString());
+    return token;
 }
 
 export function getUserByEmail(email: string) {

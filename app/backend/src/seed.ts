@@ -106,7 +106,7 @@ async function main() {
         {
             memberId: insertedMembers[0].memberId,
             cardHolderName: "Alice Smith",
-            cardNumberLastFour: "1234",
+            cardNumber: "1234",
             expirationMonth: "12",
             expirationYear: "2028",
             billingAddress: "123 Main St",
