@@ -6,13 +6,12 @@ const Navbar = () => {
   const [userName, setUserName] = useState(null);
 
   useEffect(() => {
-    const token = Cookies.get('living_fit_token'); // Get the token from cookies
+    const token = Cookies.get('living_fit_token');
     if (!token) {
       console.log('No token found');
       return;
     }
     const { userId } = jwtDecode(token)
-    console.log('User id:', userId);
 
     if (token) {
       fetch(`http://localhost:3000/api/user/${userId}`, {
@@ -50,7 +49,6 @@ const Navbar = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         credentials: 'include'
       });
