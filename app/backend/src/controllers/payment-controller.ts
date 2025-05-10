@@ -52,30 +52,11 @@ export const handleCreatePaymentInformation = async (req: Request, res: Response
         const {
             memberId,
             cardHolderName,
-            cardNumberLastFour,
+            cardNumber,
             expirationMonth,
             expirationYear,
             billingAddress
         } = req.body;
-
-        // Basic validation
-        if (!memberId || !cardHolderName || !cardNumberLastFour || !expirationMonth || !expirationYear || !billingAddress) {
-            return res.status(400).json({ message: 'Missing required payment information fields' });
-        }
-
-        // Validate card number format (last four digits)
-        if (!/^\d{4}$/.test(cardNumberLastFour)) {
-            return res.status(400).json({ message: 'Card number last four must be exactly 4 digits' });
-        }
-
-        // Validate expiration date format
-        if (!/^\d{2}$/.test(expirationMonth) || parseInt(expirationMonth) < 1 || parseInt(expirationMonth) > 12) {
-            return res.status(400).json({ message: 'Expiration month must be a valid month (01-12)' });
-        }
-
-        if (!/^\d{4}$/.test(expirationYear)) {
-            return res.status(400).json({ message: 'Expiration year must be in YYYY format' });
-        }
 
         // Check for existing payment information for this member
         const existingPayment = await getPaymentInformationByMemberId(memberId);
@@ -89,7 +70,7 @@ export const handleCreatePaymentInformation = async (req: Request, res: Response
         const newPaymentInfo = await createPaymentInformation({
             memberId,
             cardHolderName,
-            cardNumberLastFour,
+            cardNumber,
             expirationMonth,
             expirationYear,
             billingAddress
@@ -106,29 +87,16 @@ export const handleUpdatePaymentInformation = async (req: Request, res: Response
         const paymentInfoId = Number.parseInt(req.params.paymentInfoId);
         const {
             cardHolderName,
-            cardNumberLastFour,
+            cardNumber,
             expirationMonth,
             expirationYear,
             billingAddress
         } = req.body;
 
-        // Validate card number format if provided
-        if (cardNumberLastFour && !/^\d{4}$/.test(cardNumberLastFour)) {
-            return res.status(400).json({ message: 'Card number last four must be exactly 4 digits' });
-        }
-
-        // Validate expiration date format if provided
-        if (expirationMonth && (!/^\d{2}$/.test(expirationMonth) || Number.parseInt(expirationMonth) < 1 || Number.parseInt(expirationMonth) > 12)) {
-            return res.status(400).json({ message: 'Expiration month must be a valid month (01-12)' });
-        }
-
-        if (expirationYear && !/^\d{4}$/.test(expirationYear)) {
-            return res.status(400).json({ message: 'Expiration year must be in YYYY format' });
-        }
 
         const updatedPaymentInfo = await updatePaymentInformation(paymentInfoId, {
             cardHolderName,
-            cardNumberLastFour,
+            cardNumber,
             expirationMonth,
             expirationYear,
             billingAddress
