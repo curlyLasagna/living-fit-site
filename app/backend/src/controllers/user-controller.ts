@@ -1,4 +1,3 @@
-import { max } from "drizzle-orm";
 import type { Request, Response, NextFunction } from 'express';
 import {
     addMember,
