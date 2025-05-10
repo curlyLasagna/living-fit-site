@@ -2,15 +2,15 @@
 import Layout from "../../layouts/Layout.astro";
 
 const images = [
-  "/living_fit_images/hampstead/1.jpg",
-  "/living_fit_images/hampstead/2.jpg",
-  "/living_fit_images/hampstead/3.jpg",
-  "/living_fit_images/hampstead/4.jpg",
-  "/living_fit_images/hampstead/5.jpg",
-  "/living_fit_images/hampstead/6.jpg",
-  "/living_fit_images/hampstead/7.jpg",
-  "/living_fit_images/hampstead/9.jpg",
-  "/living_fit_images/hampstead/10.jpg"
+	"/living_fit_images/hampstead/1.jpg",
+	"/living_fit_images/hampstead/2.jpg",
+	"/living_fit_images/hampstead/3.jpg",
+	"/living_fit_images/hampstead/4.jpg",
+	"/living_fit_images/hampstead/5.jpg",
+	"/living_fit_images/hampstead/6.jpg",
+	"/living_fit_images/hampstead/7.jpg",
+	"/living_fit_images/hampstead/9.jpg",
+	"/living_fit_images/hampstead/10.jpg",
 ];
 ---
 
@@ -25,8 +25,15 @@ const images = [
         </div>
       ))}
     </div>
-    <div style="text-decoration:none; overflow:hidden;max-width:100%;width:500px;height:500px;"><div id="gmap-canvas" 
-      style="height:100%; width:100%;max-width:100%;"><iframe style="height:100%;width:100%;border:0;" 
-      frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=2320+Hanover+Pike+suite+6,+Hampstead,+MD+21074,+USA&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"></iframe></div><a class="embed-map-html" href="https://kbj9qpmy.com/hrn" id="enable-map-data">InMotion Hosting</a><style>#gmap-canvas img{max-width:none!important;background:none!important;font-size: inherit;font-weight:inherit;}</style></div>
+    <div style="text-decoration:none; overflow:hidden; max-width:100%; width:500px; height:500px; margin: 0 auto; padding-top: 20px; border-radius: 10px;">
+      <div id="gmap-canvas" style="height:100%; width:100%; max-width:100%; border-radius: 10px;">
+        <iframe
+          style="height:100%; width:100%; border:0; border-radius: 10px;"
+          frameborder="0"
+          src="https://www.google.com/maps/embed/v1/place?q=2320+Hanover+Pike+suite+6,+Hampstead,+MD+21074,+USA&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+        ></iframe>
+      </div>
+      <a class="embed-map-html" href="https://kbj9qpmy.com/hrn" id="enable-map-data">InMotion Hosting</a>
+    </div>
   </main>
 </Layout>

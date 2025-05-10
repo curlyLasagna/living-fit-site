@@ -2,14 +2,14 @@
 import Layout from "../../layouts/Layout.astro";
 
 const images = [
-  "/living_fit_images/glen_burnie/1.jpg",
-  "/living_fit_images/glen_burnie/2.jpg",
-  "/living_fit_images/glen_burnie/3.jpg",
-  "/living_fit_images/glen_burnie/4.jpg",
-  "/living_fit_images/glen_burnie/5.jpg",
-  "/living_fit_images/glen_burnie/6.jpg",
-  "/living_fit_images/glen_burnie/7.jpg",
-  "/living_fit_images/glen_burnie/9.jpg",
+	"/living_fit_images/glen_burnie/1.jpg",
+	"/living_fit_images/glen_burnie/2.jpg",
+	"/living_fit_images/glen_burnie/3.jpg",
+	"/living_fit_images/glen_burnie/4.jpg",
+	"/living_fit_images/glen_burnie/5.jpg",
+	"/living_fit_images/glen_burnie/6.jpg",
+	"/living_fit_images/glen_burnie/7.jpg",
+	"/living_fit_images/glen_burnie/9.jpg",
 ];
 ---
 
@@ -25,20 +25,11 @@ const images = [
       ))}
     </div>
 
-    <style>
-      #gmap-canvas img {
-        max-width: none !important;
-        background: none !important;
-        font-size: inherit;
-        font-weight: inherit;
-      }
-    </style>
 
-    <div style="text-decoration:none; overflow:hidden;max-width:100%;width:500px;height:500px;">
-      <div id="gmap-canvas" style="height:100%; width:100%;max-width:100%;">
-        <iframe 
-          style="height:100%;width:100%;border:0;" 
-          frameborder="0" 
+    <div style="text-decoration:none; overflow:hidden; max-width:100%; width:500px; height:500px; margin: 0 auto; padding-top: 20px; border-radius: 10px;">
+      <div id="gmap-canvas" style="height:100%; width:100%; max-width:100%; border-radius: 10px;">
+        <iframe
+          style="height:100%; width:100%; border:0; border-radius: 10px;"
           src="https://www.google.com/maps/embed/v1/place?q=7714+Ritchie+Hwy,+Glen+Burnie,+MD+21061,+USA&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
         ></iframe>
       </div>
