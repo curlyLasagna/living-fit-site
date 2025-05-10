@@ -1,0 +1,71 @@
+---
+import "../assets/app.css";
+---
+  <div class="flex min-h-screen justify-center items-center bg-base-200">
+    <div class="card w-full max-w-md shadow-2xl bg-base-100">
+      <div class="card-body">
+        <h2 class="text-2xl font-bold text-center">Log In</h2>
+        <form id="login-form" class="py-4">
+          <div class="form-control">
+            <label for="email" class="label">
+              <span class="label-text">Email</span>
+            </label>
+            <input type="text" id="email" name="email" class="input input-bordered w-full" required />
+          </div>
+          <div class="form-control mt-4">
+            <label for="password" class="label">
+              <span class="label-text">Password</span>
+            </label>
+            <input type="password" id="password" name="password" class="input input-bordered w-full" required />
+            <label class="label">
+              <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
+            </label>
+          </div>
+          <div class="form-control mt-6">
+            <button type="submit" class="btn btn-primary">Log In</button>
+          </div>
+        </form>
+        <div class="text-center mt-4">
+          <p>Don't have an account? <a href="/signup" class="link link-primary">Sign up</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+<script>
+  const loginForm = document.querySelector("#login-form");
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(loginForm);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch("http://localhost:3000/api/user/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Login successful:", result);
+
+          // Redirect to success page
+          window.location.href = "/success";
+        } else {
+          const error = await response.json();
+          alert(`Login failed: ${error.message || "Unknown error"}`);
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+        alert("An error occurred while trying to log in. Please try again.");
+      }
+    });
+  } else {
+    console.error("Login form not found");
+  }
+</script>

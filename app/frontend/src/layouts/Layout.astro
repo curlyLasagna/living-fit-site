@@ -1,5 +1,5 @@
 ---
-import Navbar from "../components/Navbar.astro";
+import Navbar from "../components/Navbar.tsx";
 import Footer from "../components/Footer.astro";
 import "../assets/app.css";
 ---
@@ -12,7 +12,7 @@ import "../assets/app.css";
 		<meta name="generator" content={Astro.generator} />
 		<title>Living Fit Club</title>
 	</head>
-	<Navbar />
+	<Navbar client:load />
 	<body class="min-h-screen flex flex-col">
 	<main class="flex-grow p-10">
 		<slot />

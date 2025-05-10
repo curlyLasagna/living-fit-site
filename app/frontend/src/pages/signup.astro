@@ -1,22 +1,24 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PricingSection from "../components/PricingSection";
+import { LocationDropDown } from "@/components/LocationDropDown";
 ---
 
 <Layout>
-
   <div class="flex items-center justify-center min-h-screen bg-off-white">
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
       <h2 class="text-2xl font-bold text-primary-red mb-6 text-center">
         Join the Living Fit Club!
       </h2>
-      <form id="signup-form">
+      <PricingSection client:load/>
+  <form id="signup-form" method="post" >
   <div class="mb-4">
     <label class="block text-dark-text text-sm font-bold mb-2" for="firstName">
       First Name
     </label>
     <input
+      id="firstName"
       class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="fname"
       name="fname"
       type="text"
       placeholder="First Name"
@@ -27,8 +29,8 @@ import Layout from "../layouts/Layout.astro";
       Last Name
     </label>
     <input
+      id="lastName"
       class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="lname"
       name="lname"
       type="text"
       placeholder="Last Name"
@@ -39,8 +41,8 @@ import Layout from "../layouts/Layout.astro";
       Email
     </label>
     <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
       id="email"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
       name="email"
       type="email"
       placeholder="Email"
@@ -51,56 +53,27 @@ import Layout from "../layouts/Layout.astro";
       Password
     </label>
     <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
       id="password"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
       name="password"
       type="password"
       placeholder="Password"
     />
   </div>
   <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="address">
-      Address
+    <label class="block text-dark-text text-sm font-bold mb-2" for="location">
+      Location
     </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="address"
-      name="address"
-      type="text"
-      placeholder="Address"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="phone">
-      Phone Number
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="phone"
-      name="phone"
-      type="tel"
-      placeholder="Phone Number"
-    />
-  </div>
-  <div class="mb-4">
-    <label class="block text-dark-text text-sm font-bold mb-2" for="dob">
-      Date of Birth
-    </label>
-    <input
-      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
-      id="dob"
-      name="dob"
-      type="date"
-    />
+    <LocationDropDown client:load/>
   </div>
   <div class="flex items-center justify-between">
-    <button
-      class="btn btn-primary"
-      type="submit"
-    >
+    <button class="btn btn-primary" type="submit">
       Sign Up
     </button>
-    <a class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer" onclick="login_modal.showModal()">
+    <a
+      class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer"
+      onclick="login_modal.showModal()"
+    >
       Already have an account?
     </a>
   </div>
@@ -113,35 +86,36 @@ import Layout from "../layouts/Layout.astro";
 </Layout>
 
 <script>
-const form = document.querySelector<HTMLFormElement>('#signup-form');
+  import { selected_location } from "@/store";
+
+  const form: HTMLFormElement | null = document.querySelector("#signup-form");
   if (form) {
-    form.addEventListener('submit', async (e: SubmitEvent) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries())
-
+      const data = Object.fromEntries(formData.entries());
+      // Set locationId
+      data.locationId = selected_location.get().locationId
+      console.log("Data sent", data)
       try {
-        const response = await fetch('http://localhost:3000/api/user/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
+        const response = await fetch("http://localhost:3000/api/user/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
         });
 
         if (response.ok && response.status === 201) {
-          window.location.href = '/success';
+          window.location.href = "/success";
         } else {
           const message = await response.text();
           alert(`Registration failed: ${message}`);
         }
       } catch (err) {
-        console.error('Network error:', err);
+        console.error("Network error:", err);
       }
     });
   } else {
-    console.error('Register form not found');
+    console.error("Form not found");
   }
 </script>
-
