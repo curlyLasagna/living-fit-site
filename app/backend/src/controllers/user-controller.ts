@@ -24,7 +24,7 @@ export const handleAddMember = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Email already registered" });
         }
         const { member: newMember } = await addMember(member);
-        return res.status(201).json({ message: `New member: ${newMember.email}` });
+        return res.status(201).json(newMember);
     } catch (error) {
         return res.status(500).json({ message: "Internal server error", error: error.message });
     }
