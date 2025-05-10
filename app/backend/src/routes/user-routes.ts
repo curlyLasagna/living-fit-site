@@ -11,13 +11,16 @@ import {
     handleGetMemberQRCodes,
     handleUpdateQRCodeStatus,
     handleGetMembershipChanges,
-    handleGetMemberModifications
+    handleGetMemberModifications,
+    handleLogin
 } from '../controllers/user-controller';
 
 const router = express.Router();
 
 // Member Management Routes
 router.post('/register', handleAddMember);
+
+router.post('/login', handleLogin);
 
 router.get('/:memberId', authenticateToken, handleGetMemberById);
 

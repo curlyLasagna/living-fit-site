@@ -12,9 +12,12 @@ import {
     qrCodes
 } from '../schema';
 import { db } from '../utils/db';
+import generateToken from "../middleware/auth";
 
+// User Registration
 export async function addMember(user: NewMember) {
     const saltRounds = 5;
+    console.log("New User:", user)
     const { password, ...memberDetails } = user
 
     if (!password) {
@@ -37,7 +40,34 @@ export async function addMember(user: NewMember) {
         locationId: members.locationId
     })
 
+    console.log('New member added:', newMember);
+
     return { member: newMember }
+}
+
+export async function login(email: string, password: string) {
+    if (!email) {
+        throw new Error('Email is required');
+    }
+    const found_user = await db.select()
+        .from(members)
+        .where(
+            eq(members.email, email)
+        );
+
+    const user = found_user[0];
+    if (!user || !user.password) {
+        throw new Error('Invalid credentials');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+        throw new Error('Invalid credentials');
+    }
+
+    const token = generateToken(user.memberId.toString());
+    return token;
 }
 
 export function getUserByEmail(email: string) {

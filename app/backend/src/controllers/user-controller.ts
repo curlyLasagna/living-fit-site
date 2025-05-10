@@ -1,3 +1,5 @@
+import { max } from "drizzle-orm";
+import type { Request, Response, NextFunction } from 'express';
 import {
     addMember,
     getUserByEmail,
@@ -10,10 +12,11 @@ import {
     getMemberQRCodes,
     updateQRCodeStatus,
     getMembershipChanges,
-    getMemberModifications
+    getMemberModifications,
+    login
 } from "../services/user-services";
 
-export const handleAddMember = async (req, res) => {
+export const handleAddMember = async (req: Request, res: Response) => {
     try {
         const member = req.body;
         const existingUser = await getUserByEmail(member.email);
@@ -27,7 +30,24 @@ export const handleAddMember = async (req, res) => {
     }
 };
 
-export const handleGetMemberById = async (req, res) => {
+export const handleLogin = async (req: Request, res: Response, next: NextFunction) => {
+    const { email, password } = req.body;
+
+    try {
+        const token = await login(email, password);
+        res.cookie('living_fit_token', token, {
+            httpOnly: false,
+            maxAge: 3600000, // 1 hour
+            sameSite: 'lax',
+            secure: false,
+        });
+        return res.status(200).json(token);
+    } catch (error) {
+        return res.status(401).json({ message: "Invalid credentials", error: error.message });
+    }
+};
+
+export const handleGetMemberById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const member = await getMemberById(Number(req.params.memberId));
         if (!member) {
@@ -40,7 +60,7 @@ export const handleGetMemberById = async (req, res) => {
     }
 };
 
-export const handleUpdateMember = async (req, res) => {
+export const handleUpdateMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const updatedMember = await updateMember(Number(req.params.memberId), req.body);
         res.json(updatedMember);
@@ -49,7 +69,7 @@ export const handleUpdateMember = async (req, res) => {
     }
 };
 
-export const handleUpdateMembershipStatus = async (req, res) => {
+export const handleUpdateMembershipStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { status } = req.body;
         if (!['active', 'terminated', 'cancelled'].includes(status)) {
@@ -65,7 +85,7 @@ export const handleUpdateMembershipStatus = async (req, res) => {
     }
 };
 
-export const handleAddFamilyMember = async (req, res) => {
+export const handleAddFamilyMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const familyMember = await addFamilyMember({
             ...req.body,
@@ -77,7 +97,7 @@ export const handleAddFamilyMember = async (req, res) => {
     }
 };
 
-export const handleGetFamilyMembers = async (req, res) => {
+export const handleGetFamilyMembers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const familyMembers = await getFamilyMembers(Number(req.params.memberId));
         res.json(familyMembers);
@@ -86,7 +106,7 @@ export const handleGetFamilyMembers = async (req, res) => {
     }
 };
 
-export const handleRemoveFamilyMember = async (req, res) => {
+export const handleRemoveFamilyMember = async (req: Request, res: Response, next: NextFunction) => {
     try {
         await removeFamilyMember(Number(req.params.familyMemberId));
         res.status(204).send();
@@ -95,7 +115,7 @@ export const handleRemoveFamilyMember = async (req, res) => {
     }
 };
 
-export const handleGetMemberQRCodes = async (req, res) => {
+export const handleGetMemberQRCodes = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const qrCodes = await getMemberQRCodes(Number(req.params.memberId));
         res.json(qrCodes);
@@ -104,7 +124,7 @@ export const handleGetMemberQRCodes = async (req, res) => {
     }
 };
 
-export const handleUpdateQRCodeStatus = async (req, res) => {
+export const handleUpdateQRCodeStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { status } = req.body;
         if (!['active', 'revoked', 'expired'].includes(status)) {
@@ -120,7 +140,7 @@ export const handleUpdateQRCodeStatus = async (req, res) => {
     }
 };
 
-export const handleGetMembershipChanges = async (req, res) => {
+export const handleGetMembershipChanges = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const changes = await getMembershipChanges(Number(req.params.memberId));
         res.json(changes);
@@ -129,7 +149,7 @@ export const handleGetMembershipChanges = async (req, res) => {
     }
 };
 
-export const handleGetMemberModifications = async (req, res) => {
+export const handleGetMemberModifications = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const modifications = await getMemberModifications(Number(req.params.memberId));
         res.json(modifications);

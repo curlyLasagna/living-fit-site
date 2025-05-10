@@ -19,6 +19,8 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.org
       PGADMIN_DEFAULT_PASSWORD: postgres
+    logging:
+      driver: "none"
     ports:
       - "8080:80"
     volumes:
@@ -41,7 +43,7 @@ services:
       - "3000:3000"
     volumes:
       # bind mount to reflect changes
-      - ./app/backend/src:/app/src
+      - ./app/backend:/app
       - /app/node_modules
     depends_on:
       - postgres
