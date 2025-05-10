@@ -47,6 +47,20 @@ export const handleLogin = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
+export const handleLogout = async (req: Request, res: Response) => {
+    try {
+        res.clearCookie("living_fit_token", {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+        });
+
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Server error" });
+    }
+}
+
 export const handleGetMemberById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const member = await getMemberById(Number(req.params.memberId));

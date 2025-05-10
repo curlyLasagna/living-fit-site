@@ -35,6 +35,40 @@ const Navbar = () => {
     }
   }, []);
 
+  const handleSignOut = async () => {
+    try {
+      const token = Cookies.get('living_fit_token');
+
+      if (!token) {
+        console.error('No authentication token found');
+        window.location.href = '/';
+        return;
+      }
+
+      // Call the logout endpoint
+      const response = await fetch('http://localhost:3000/api/user/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        // Remove the cookie
+        Cookies.remove('living_fit_token');
+        // Redirect to home page
+        window.location.href = '/';
+        console.log('Successfully logged out');
+      } else {
+        console.error('Logout failed:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
+  };
+
   return (
     <div className="navbar shadow-sm bg-gray-50">
       <div className="navbar-start">
@@ -77,7 +111,11 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {userName ? (
-          <span className="mr-4">Hello, {userName}</span>
+          <div className="flex items-center">
+            <span className="mr-4">Hello, {userName}</span>
+            <a href="/user" className="btn btn-ghost mr-2">Dashboard</a>
+            <button onClick={handleSignOut} className="btn btn-primary">Sign Out</button>
+          </div>
         ) : (
           <>
             {console.log('No user logged in')}

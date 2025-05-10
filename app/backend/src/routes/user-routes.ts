@@ -12,7 +12,8 @@ import {
     handleUpdateQRCodeStatus,
     handleGetMembershipChanges,
     handleGetMemberModifications,
-    handleLogin
+    handleLogin,
+    handleLogout
 } from '../controllers/user-controller';
 
 const router = express.Router();
@@ -21,6 +22,8 @@ const router = express.Router();
 router.post('/register', handleAddMember);
 
 router.post('/login', handleLogin);
+
+router.post('/logout', handleLogout)
 
 router.get('/:memberId', authenticateToken, handleGetMemberById);
 

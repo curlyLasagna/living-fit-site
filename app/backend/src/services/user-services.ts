@@ -17,7 +17,6 @@ import generateToken from "../middleware/auth";
 // User Registration
 export async function addMember(user: NewMember) {
     const saltRounds = 5;
-    console.log("New User:", user)
     const { password, ...memberDetails } = user
 
     if (!password) {
@@ -27,9 +26,10 @@ export async function addMember(user: NewMember) {
     const hash = await bcrypt.hash(password, saltRounds);
     const [newMember] = await db.insert(members).values({
         ...memberDetails,
-        password: hash
+        password: hash,
+        membershipStatus: memberDetails.membershipStatus || 'active'
     }).returning({
-        member_id: members.memberId,
+        memberId: members.memberId,
         fname: members.fname,
         lname: members.lname,
         address: members.address,
@@ -39,8 +39,6 @@ export async function addMember(user: NewMember) {
         membershipStatus: members.membershipStatus,
         locationId: members.locationId
     })
-
-    console.log('New member added:', newMember);
 
     return { member: newMember }
 }
