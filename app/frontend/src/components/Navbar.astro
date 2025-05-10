@@ -1,45 +1,52 @@
 ---
 import ModalLogin from "./Modal_Login.astro";
 ---
+
 <div class="navbar shadow-sm bg-gray-50">
   <div class="navbar-start">
     <div class="dropdown">
       <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> 
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> 
+        </svg>
       </div>
-      <ul
-        tabindex="0"
-        class="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Item 1</a></li>
+
+      
+      <ul tabindex="0" class="menu menu-sm dropdown-content rounded-box z-1 mt-3 w-52 p-2 shadow bg-white">
+        <li><a href="#">Item 1</a></li>
         <li>
-          <a>Parent</a>
-          <ul class="p-2">
-            <li><a>Hampstead</a></li>
-            <li><a>Glen Burnie</a></li>
-            <li><a>Middle River</a></li>
-          </ul>
+          <details>
+            <summary>Locations</summary>
+            <ul class="p-2 bg-white">
+              <li><a href="/locations/Hampstead">Hampstead</a></li>
+              <li><a href="/locations/GlenBurnie">Glen Burnie</a></li>
+              <li><a href="/locations/MiddleRiver">Middle River</a></li>
+            </ul>
+          </details>
         </li>
-        <li><a>Item 3</a></li>
+        <li><a href="#">Item 3</a></li>
       </ul>
     </div>
     <a class="btn btn-ghost text-xl" href="/">Living Fit Club</a>
   </div>
+
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1">
       <li><a>About</a></li>
-      <li>
+      <li tabindex="0">
         <details>
           <summary>Locations</summary>
-          <ul class="p-2">
-            <li><a>Hampstead</a></li>
-            <li><a>Glen Burnie</a></li>
-            <li><a>Middle River</a></li>
+          <ul class="p-2 bg-white">
+            <li><a href="/locations/Hampstead">Hampstead</a></li>
+            <li><a href="/locations/GlenBurnie">Glen Burnie</a></li>
+            <li><a href="/locations/MiddleRiver">Middle River</a></li>
           </ul>
         </details>
       </li>
       <li><a>Careers</a></li>
     </ul>
   </div>
+
   <div class="navbar-end">
     <a class="btn btn-primary mr-2" href="/signup">Join Now</a>
     <button onclick="login_modal.showModal()" class="btn btn-primary">Log in</button>
