@@ -1,0 +1,293 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PricingSection from "../components/PricingSection";
+import { LocationDropDown } from "@/components/LocationDropDown";
+---
+
+<Layout>
+  <div class="flex items-center justify-center min-h-screen bg-off-white">
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+      <h2 class="text-2xl font-bold text-primary-red mb-6 text-center">
+        Join the Living Fit Club!
+      </h2>
+      <PricingSection client:load/>
+  <form id="signup-form" method="post" >
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="firstName">
+      First Name
+    </label>
+    <input
+      id="firstName"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="fname"
+      type="text"
+      placeholder="First Name"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="lastName">
+      Last Name
+    </label>
+    <input
+      id="lastName"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="lname"
+      type="text"
+      placeholder="Last Name"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="email">
+      Email
+    </label>
+    <input
+      id="email"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="email"
+      type="email"
+      placeholder="Email"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="address">
+      Address
+    </label>
+    <input
+      id="address"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="address"
+      type="text"
+      placeholder="Address"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="phone">
+      Phone
+    </label>
+    <input
+      id="phone"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="phone"
+      type="tel"
+      placeholder="Phone Number"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="password">
+      Password
+    </label>
+    <input
+      id="password"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="password"
+      type="password"
+      placeholder="Password"
+    />
+  </div>
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="location">
+      Location
+    </label>
+    <LocationDropDown client:load/>
+  </div>
+
+  <h3 class="text-xl font-bold text-primary-red mb-4 mt-8">Payment Information</h3>
+
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="cardHolderName">
+      Card Holder Name
+    </label>
+    <input
+      id="cardHolderName"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="cardHolderName"
+      type="text"
+      placeholder="Name on card"
+    />
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="cardNumber">
+      Card Number
+    </label>
+    <input
+      id="cardNumber"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="cardNumber"
+      type="text"
+      placeholder="Card number"
+      maxlength="16"
+    />
+    <p class="text-xs text-gray-500 mt-1">Only the last 4 digits will be stored for security</p>
+  </div>
+
+  <div class="flex mb-4 space-x-4">
+    <div class="w-1/2">
+      <label class="block text-dark-text text-sm font-bold mb-2" for="expirationMonth">
+        Expiration Month
+      </label>
+      <select
+        id="expirationMonth"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+        name="expirationMonth"
+      >
+        <option value="" disabled selected>Month</option>
+        <option value="01">01 - January</option>
+        <option value="02">02 - February</option>
+        <option value="03">03 - March</option>
+        <option value="04">04 - April</option>
+        <option value="05">05 - May</option>
+        <option value="06">06 - June</option>
+        <option value="07">07 - July</option>
+        <option value="08">08 - August</option>
+        <option value="09">09 - September</option>
+        <option value="10">10 - October</option>
+        <option value="11">11 - November</option>
+        <option value="12">12 - December</option>
+      </select>
+    </div>
+
+    <div class="w-1/2">
+      <label class="block text-dark-text text-sm font-bold mb-2" for="expirationYear">
+        Expiration Year
+      </label>
+      <select
+        id="expirationYear"
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+        name="expirationYear"
+      >
+        <option value="" disabled selected>Year</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+        <option value="2031">2031</option>
+        <option value="2032">2032</option>
+        <option value="2033">2033</option>
+        <option value="2034">2034</option>
+        <option value="2035">2035</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-dark-text text-sm font-bold mb-2" for="billingAddress">
+      Billing Address
+    </label>
+    <textarea
+      id="billingAddress"
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-dark-text leading-tight focus:outline-none focus:shadow-outline"
+      name="billingAddress"
+      placeholder="Billing Address"
+      rows="3"
+    ></textarea>
+    <div class="mt-2">
+      <input type="checkbox" id="sameAsAddress" class="mr-2" />
+      <label for="sameAsAddress" class="text-sm text-dark-text">Same as address</label>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <button class="btn btn-primary" type="submit">
+      Sign Up
+    </button>
+    <a
+      class="inline-block align-baseline font-bold text-sm text-primary-red hover:text-secondary-red cursor-pointer"
+      onclick="login_modal.showModal()"
+    >
+      Already have an account?
+    </a>
+  </div>
+</form>
+      <p class="text-center text-dark-text text-xs mt-4">
+        &copy; {new Date().getFullYear()} Living Fit Club. All rights reserved.
+      </p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { selected_location } from "@/store";
+
+  const form: HTMLFormElement | null = document.querySelector("#signup-form");
+  const sameAsAddressCheckbox: HTMLInputElement | null = document.querySelector("#sameAsAddress");
+  const addressInput: HTMLInputElement | null = document.querySelector("#address");
+  const billingAddressInput: HTMLTextAreaElement | null = document.querySelector("#billingAddress");
+
+  // Copy address to billing address when checkbox is clicked
+  if (sameAsAddressCheckbox && addressInput && billingAddressInput) {
+    sameAsAddressCheckbox.addEventListener("change", () => {
+      if (sameAsAddressCheckbox.checked) {
+        billingAddressInput.value = addressInput.value;
+      }
+    });
+  }
+
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+            // Set locationId
+      data.locationId = selected_location.get().locationId
+      console.log("Data sent", data)
+
+      try {
+        const response = await fetch("http://localhost:3000/api/user/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok && response.status === 201) {
+          const userData = await response.json();
+          console.log("User registered successfully:",  userData);
+
+          // After successful registration, create payment information
+          try {
+            const paymentData = {
+              // Attach the new member id to the payment table
+              memberId: userData.memberId,
+              cardHolderName: data.cardHolderName,
+              cardNumber: data.cardNumber,
+              expirationMonth: data.expirationMonth,
+              expirationYear: data.expirationYear,
+              billingAddress: data.billingAddress
+            };
+
+            const paymentResponse = await fetch("http://localhost:3000/api/payments", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(paymentData),
+            });
+
+            if (paymentResponse.ok) {
+              window.location.href = "/success";
+            } else {
+              const message = await paymentResponse.text();
+              alert(`Payment information setup failed: ${message}`);
+              // Still redirect to success since user registration was successful
+              window.location.href = "/success";
+            }
+          } catch (paymentErr) {
+            console.error("Payment setup error:", paymentErr);
+            // Still redirect to success since user registration was successful
+            window.location.href = "/success";
+          }
+        } else {
+          const message = await response.text();
+          alert(`Registration failed: ${message}`);
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+      }
+    });
+  } else {
+    console.error("Form not found");
+  }
+</script>
