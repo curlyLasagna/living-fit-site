@@ -1,9 +1,10 @@
 import type { Request, Response } from 'express';
 import type { NextFunction } from 'express';
 import JWT from 'jsonwebtoken';
-
+import dotenv from "dotenv";
+dotenv.config({ path: './src/.env' });
 const JWT_CONFIG: JWT.SignOptions = {
-    expiresIn: '10m',
+    expiresIn: '7d',
 };
 
 const { JWT_SECRET } = process.env || "skrrt";
@@ -27,6 +28,18 @@ export function verifyToken(token: string) {
 }
 
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-    // TODO: Implement proper authentication
-    next();
+    const token = req.cookies?.living_fit_token || req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({ message: 'UNAUTHORIZED: Missing token' });
+    }
+
+    try {
+        const decoded = verifyToken(token);
+        // Attach user info to the request object
+        req.user = decoded;
+        next();
+    } catch (err) {
+        return res.status(401).json({ message: err.message });
+    }
 };
