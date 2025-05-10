@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const images = [
+	"/living_fit_images/hampstead/1.jpg",
+	"/living_fit_images/hampstead/2.jpg",
+	"/living_fit_images/hampstead/3.jpg",
+	"/living_fit_images/hampstead/4.jpg",
+	"/living_fit_images/hampstead/5.jpg",
+	"/living_fit_images/hampstead/6.jpg",
+	"/living_fit_images/hampstead/7.jpg",
+	"/living_fit_images/hampstead/9.jpg",
+	"/living_fit_images/hampstead/10.jpg",
+];
+---
+
+<Layout>
+  <main class="max-w-5xl mx-auto p-8 bg-gray-100 text-gray-900 min-h-screen">
+    <h1 class="text-4xl font-bold mb-6">Hampstead Location</h1>
+
+    <div class="carousel rounded-box space-x-4">
+      {images.map((src) => (
+        <div class="carousel-item" style="flex: none;">
+          <img src={src} alt="Hampstead photo" class="h-64 w-auto object-cover" />
+        </div>
+      ))}
+    </div>
+    <div style="text-decoration:none; overflow:hidden; max-width:100%; width:500px; height:500px; margin: 0 auto; padding-top: 20px; border-radius: 10px;">
+      <div id="gmap-canvas" style="height:100%; width:100%; max-width:100%; border-radius: 10px;">
+        <iframe
+          style="height:100%; width:100%; border:0; border-radius: 10px;"
+          frameborder="0"
+          src="https://www.google.com/maps/embed/v1/place?q=2320+Hanover+Pike+suite+6,+Hampstead,+MD+21074,+USA&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+        ></iframe>
+      </div>
+      <a class="embed-map-html" href="https://kbj9qpmy.com/hrn" id="enable-map-data">InMotion Hosting</a>
+    </div>
+  </main>
+</Layout>

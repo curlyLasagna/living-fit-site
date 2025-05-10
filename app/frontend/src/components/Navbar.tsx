@@ -81,9 +81,9 @@ const Navbar = () => {
             <li>
               <a href="#">Parent</a>
               <ul className="p-2">
-                <li><a href="#">Hampstead</a></li>
-                <li><a href="#">Glen Burnie</a></li>
-                <li><a href="#">Middle River</a></li>
+                <li><a href="/locations/Hampstead">Hampstead</a></li>
+                <li><a href="/locations/GlenBurnie">Glen Burnie</a></li>
+                <li><a href="/locations/MiddleRiver">Middle River</a></li>
               </ul>
             </li>
             <li><a href="#">Item 3</a></li>
@@ -98,9 +98,9 @@ const Navbar = () => {
             <details>
               <summary>Locations</summary>
               <ul className="p-2">
-                <li><a href="#">Hampstead</a></li>
-                <li><a href="#">Glen Burnie</a></li>
-                <li><a href="#">Middle River</a></li>
+                <li><a href="/locations/Hampstead">Hampstead</a></li>
+                <li><a href="/locations/GlenBurnie">Glen Burnie</a></li>
+                <li><a href="/locations/MiddleRiver">Middle River</a></li>
               </ul>
             </details>
           </li>
