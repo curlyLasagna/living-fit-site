@@ -10,4 +10,25 @@ const httpClient = (url: string, options: any = {}) => {
     return fetchUtils.fetchJson(url, options);
 };
 
-export const dataProvider = simpleRestProvider('http://localhost:3000/api', httpClient);
+// Custom data provider to match your API structure
+const dataProvider = {
+    ...simpleRestProvider('http://localhost:3000/api', httpClient),
+    
+    // Override getList to use the correct endpoint for users
+    getList: async (resource: string, params: any) => {
+        if (resource === 'users') {
+            const { json } = await httpClient('http://localhost:3000/api/user/all');
+            return {
+                data: json.map((item: any) => ({
+                    ...item,
+                    id: item.memberId // Map memberId to id
+                })),
+                total: json.length,
+            };
+        }
+        // For other resources, use the default implementation
+        return simpleRestProvider('http://localhost:3000/api', httpClient).getList(resource, params);
+    },
+};
+
+export { dataProvider };
