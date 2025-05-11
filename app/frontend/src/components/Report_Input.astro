@@ -1,0 +1,64 @@
+---
+export const prerender = false;
+import jwt from "jsonwebtoken";
+let memberId = null;
+let locationId = null;
+const token = Astro.cookies.get("living_fit_token")?.value;
+if (token) {
+	try {
+		const decoded = jwt.verify(token, "skrt");
+		memberId = decoded?.userId;
+		// Fetch user data to get locationId
+		if (memberId) {
+			const userRes = await fetch(
+				`http://localhost:3000/api/user/${memberId}`,
+				{ credentials: "include" },
+			);
+			if (userRes.ok) {
+				const userData = await userRes.json();
+				locationId = userData.locationId;
+			}
+		}
+	} catch (err) {
+		console.error("JWT error:", err);
+	}
+}
+let message = null;
+if (Astro.request.method === "POST") {
+	try {
+		const data = await Astro.request.formData();
+		const description = data.get("description");
+		console.log("description", description);
+		// Send POST request to backend API, including memberId and locationId
+		const res = await fetch("http://localhost:3000/api/reports", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				issueDescription: description,
+				memberId,
+				locationId,
+			}),
+		});
+		if (res.ok) {
+			message = "Report submitted successfully.";
+		} else {
+			message = "Failed to submit report.";
+		}
+	} catch (error) {
+		if (error instanceof Error) {
+			message = error.message;
+			console.error(error.message);
+		}
+	}
+}
+---
+
+<form method="POST">
+  <fieldset class="fieldset">
+    <legend class="fieldset-legend">Report an issue</legend>
+    <textarea class="textarea h-24 w-1/2" name="description" placeholder="Describe the issue"></textarea>
+    <div class="label">Optional</div>
+    <button class="btn btn-primary mt-2 w-1/2" type="submit">Submit</button>
+  </fieldset>
+  {message && <div class="mt-2 text-success">{message}</div>}
+</form>

@@ -1,7 +1,9 @@
 ---
+export const prerender = false;
 import QRCodeComponent from "@/components/QR_Code";
 import Layout from "@/layouts/Layout.astro";
 import Payment from "@/components/Payment.tsx";
+import ReportInput from "@/components/Report_Input.astro";
 ---
 
 <Layout>
@@ -16,7 +18,7 @@ import Payment from "@/components/Payment.tsx";
   <div class="tab-content bg-base-100 border-base-300 p-6">Family Members</div>
 
   <input type="radio" name="tab" class="tab" aria-label="Report an issue" />
-  <div class="tab-content bg-base-100 border-base-300 p-6">Report an Issue</div>
+  <div class="tab-content bg-base-100 border-base-300 p-6"><ReportInput/></div>
 
   <input type="radio" name="tab" class="tab" aria-label="Payments and fees" />
   <div class="tab-content bg-base-100 border-base-300 p-6"><Payment client:load/></div>
