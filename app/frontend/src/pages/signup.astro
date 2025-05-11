@@ -247,7 +247,7 @@ import { LocationDropDown } from "@/components/LocationDropDown";
           console.log("User registered successfully:",  userData);
 
           // After successful registration, create payment information
-          try {
+          // try {
             const paymentData = {
               // Attach the new member id to the payment table
               memberId: userData.memberId,
@@ -258,6 +258,24 @@ import { LocationDropDown } from "@/components/LocationDropDown";
               billingAddress: data.billingAddress
             };
 
+            const QRData = {
+              entityId: userData.memberId,
+              locationId: data.locationId,
+              entityType: "member",
+              status: "active",
+            };
+
+            console.log("QRData", QRData);
+
+            // Add a QR code for the new member
+            await fetch("http://localhost:3000/api/qr", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(QRData),
+            });
+
             const paymentResponse = await fetch("http://localhost:3000/api/payments", {
               method: "POST",
               headers: {
@@ -266,19 +284,19 @@ import { LocationDropDown } from "@/components/LocationDropDown";
               body: JSON.stringify(paymentData),
             });
 
-            if (paymentResponse.ok) {
-              window.location.href = "/success";
-            } else {
-              const message = await paymentResponse.text();
-              alert(`Payment information setup failed: ${message}`);
-              // Still redirect to success since user registration was successful
-              window.location.href = "/success";
-            }
-          } catch (paymentErr) {
-            console.error("Payment setup error:", paymentErr);
-            // Still redirect to success since user registration was successful
-            window.location.href = "/success";
-          }
+            // if (paymentResponse.ok) {
+            //   window.location.href = "/success";
+            // } else {
+            //   const message = await paymentResponse.text();
+            //   alert(`Payment information setup failed: ${message}`);
+            //   // Still redirect to success since user registration was successful
+            //   window.location.href = "/success";
+            // }
+          // } catch (paymentErr) {
+          //   console.error("Payment setup error:", paymentErr);
+          //   // Still redirect to success since user registration was successful
+          //   window.location.href = "/success";
+          // }
         } else {
           const message = await response.text();
           alert(`Registration failed: ${message}`);

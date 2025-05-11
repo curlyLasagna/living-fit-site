@@ -12,26 +12,37 @@ export const getQRCodeById = async (qrCodeId: number): Promise<QrCode | null> =>
     return result.length ? result[0] : null;
 };
 
-export const getMemberQRCodes = async (memberId: number): Promise<QrCode[]> => {
-    return await db.select().from(qrCodes).where(eq(qrCodes.memberId, memberId));
+export const getMemberQRCodes = async (memberId: number): Promise<QrCode | null> => {
+    const result = await db.select()
+        .from(qrCodes)
+        .where(and(eq(qrCodes.entityId, memberId), eq(qrCodes.entityType, 'member')))
+        .limit(1);
+    return result.length ? result[0] : null;
 };
 
-export const getFamilyMemberQRCodes = async (familyMemberId: number): Promise<QrCode[]> => {
-    return await db.select().from(qrCodes).where(eq(qrCodes.familyMemberId, familyMemberId));
+export const getFamilyMemberQRCodes = async (familyMemberId: number): Promise<QrCode | null> => {
+    const result = await db.select()
+        .from(qrCodes)
+        .where(and(eq(qrCodes.entityId, familyMemberId), eq(qrCodes.entityType, 'family_member')))
+        .limit(1);
+    return result.length ? result[0] : null;
 };
 
 export const getLocationQRCodes = async (locationId: number): Promise<QrCode[]> => {
     return await db.select().from(qrCodes).where(eq(qrCodes.locationId, locationId));
 };
 
-export const createQRCode = async (data: Omit<NewQrCode, 'uuid'>): Promise<QrCode> => {
+export const createQRCode = async (data: Omit<NewQrCode, 'uuid'> & { entityType: 'member' | 'family_member' }): Promise<QrCode> => {
     // Generate a UUID for the QR code
     const qrCodeData: NewQrCode = {
         ...data,
         uuid: uuidv4(),
     };
 
+    console.log('Creating QR code with data:', qrCodeData);
+
     const result = await db.insert(qrCodes).values(qrCodeData).returning();
+    console.log('Created QR code:', result);
     return result[0];
 };
 

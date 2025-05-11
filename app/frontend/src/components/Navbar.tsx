@@ -116,7 +116,6 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            {console.log('No user logged in')}
             <a className="btn btn-primary mr-2" href="/signup">Join Now</a>
             <a href="/login" className="btn btn-primary">Log in</a>
           </>
