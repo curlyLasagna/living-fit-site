@@ -3,7 +3,7 @@ import { dataProvider } from './dataProvider';
 import { Dashboard } from './Dashboard';
 import { UserList } from './resources/UserList';
 import { ReportList } from './resources/ReportList';
-import { LocationList } from './resources/LocationList';
+import { LocationList, LocationCreate, LocationEdit } from './resources/LocationList';
 import { theme } from './theme';
 
 const AdminWrapper = () => {
@@ -16,7 +16,12 @@ const AdminWrapper = () => {
         >
             <Resource name="users" list={UserList} />
             <Resource name="reports" list={ReportList} />
-            <Resource name="locations" list={LocationList} />
+            <Resource 
+                name="locations" 
+                list={LocationList} 
+                create={LocationCreate}
+                edit={LocationEdit}
+            />
         </Admin>
     );
 };

@@ -21,7 +21,7 @@ const dataProvider = {
             return {
                 data: json.map((item: any) => ({
                     ...item,
-                    id: item.memberId // Map memberId to id
+                    id: item.memberId
                 })),
                 total: json.length,
             };
@@ -48,6 +48,44 @@ const dataProvider = {
         }
         // For other resources, use the default implementation
         return simpleRestProvider('http://localhost:3000/api', httpClient).getList(resource, params);
+    },
+
+    create: async (resource: string, params: any) => {
+        if (resource === 'locations') {
+            const { json } = await httpClient('http://localhost:3000/api/locations', {
+                method: 'POST',
+                body: JSON.stringify(params.data),
+            });
+            return {
+                data: { ...json, id: json.locationId },
+            };
+        }
+        return simpleRestProvider('http://localhost:3000/api', httpClient).create(resource, params);
+    },
+
+    update: async (resource: string, params: any) => {
+        if (resource === 'locations') {
+            const { json } = await httpClient(`http://localhost:3000/api/locations/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(params.data),
+            });
+            return {
+                data: { ...json, id: json.locationId },
+            };
+        }
+        return simpleRestProvider('http://localhost:3000/api', httpClient).update(resource, params);
+    },
+
+    delete: async (resource: string, params: any) => {
+        if (resource === 'locations') {
+            await httpClient(`http://localhost:3000/api/locations/${params.id}`, {
+                method: 'DELETE',
+            });
+            return {
+                data: { id: params.id },
+            };
+        }
+        return simpleRestProvider('http://localhost:3000/api', httpClient).delete(resource, params);
     },
 };
 
