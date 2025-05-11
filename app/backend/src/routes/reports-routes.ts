@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { RequestHandler } from 'express';
 import {
     handleGetAllReports,
     handleGetReportById,
@@ -16,14 +16,14 @@ const router = express.Router();
 // Apply authentication middleware to all routes
 
 // Reports routes
-router.get('/', handleGetAllReports);
-router.get('/:reportId', handleGetReportById);
-router.get('/member/:memberId', handleGetReportsByMemberId);
-router.get('/location/:locationId', handleGetReportsByLocationId);
-router.get('/status/:status', handleGetReportsByStatus);
-router.post('/', handleCreateReport);
-router.patch('/:reportId', handleUpdateReport);
-router.patch('/:reportId/status', handleUpdateReportStatus);
-router.delete('/:reportId', handleDeleteReport);
+router.get('/', handleGetAllReports as RequestHandler);
+router.get('/:reportId', handleGetReportById as RequestHandler);
+router.get('/member/:memberId', handleGetReportsByMemberId as RequestHandler);
+router.get('/location/:locationId', handleGetReportsByLocationId as RequestHandler);
+router.get('/status/:status', handleGetReportsByStatus as RequestHandler);
+router.post('/', handleCreateReport as RequestHandler);
+router.patch('/:reportId', handleUpdateReport as RequestHandler);
+router.patch('/:reportId/status', handleUpdateReportStatus as RequestHandler);
+router.delete('/:reportId', handleDeleteReport as RequestHandler);
 
 export default router;

@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import {
+    getAllMembers,
     addMember,
     getUserByEmail,
     getMemberById,
@@ -14,6 +15,16 @@ import {
     getMemberModifications,
     login
 } from "../services/user-services";
+
+// Get all users
+export const handleGetUsers =  async (req, res) => {
+    try {
+        const users = await getAllMembers();
+        res.status(200).json(users);
+    } catch (error) {
+        return res.status(500).json({ message: 'Error retrieving users', error: error.message });
+    }
+};
 
 export const handleAddMember = async (req: Request, res: Response) => {
     try {

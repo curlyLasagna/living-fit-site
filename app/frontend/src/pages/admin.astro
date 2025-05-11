@@ -1,0 +1,38 @@
+---
+import AdminWrapper from '../components/admin/AdminWrapper';
+---
+
+<div id="admin-root" class="min-h-screen bg-gray-50">
+    <AdminWrapper client:only="react" />
+</div>
+
+<style>
+    /* Override React Admin styles */
+    :root {
+        --ra-color-primary: #4F46E5;
+        --ra-color-secondary: #10B981;
+    }
+
+    #admin-root {
+        font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #4F46E5;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #4338CA;
+    }
+</style>

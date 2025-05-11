@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+    handleGetUsers,
     handleAddMember,
     handleGetMemberById,
     handleUpdateMember,
@@ -16,6 +17,9 @@ import {
 } from '../controllers/user-controller';
 
 const router = express.Router();
+
+// Get all users
+router.get('/all', handleGetUsers);
 
 // Member Management Routes
 router.post('/register', handleAddMember);
