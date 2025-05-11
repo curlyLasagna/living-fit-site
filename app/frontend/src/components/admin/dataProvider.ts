@@ -36,6 +36,16 @@ const dataProvider = {
                 total: json.length,
             };
         }
+        if (resource === 'locations') {
+            const { json } = await httpClient('http://localhost:3000/api/locations');
+            return {
+                data: json.map((item: any) => ({
+                    ...item,
+                    id: item.locationId
+                })),
+                total: json.length,
+            };
+        }
         // For other resources, use the default implementation
         return simpleRestProvider('http://localhost:3000/api', httpClient).getList(resource, params);
     },
