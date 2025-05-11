@@ -1,5 +1,4 @@
 import express from 'express';
-import { authenticateToken } from '../middleware/auth';
 import {
     handleGetAllReports,
     handleGetReportById,
@@ -15,7 +14,6 @@ import {
 const router = express.Router();
 
 // Apply authentication middleware to all routes
-router.use(authenticateToken);
 
 // Reports routes
 router.get('/', handleGetAllReports);

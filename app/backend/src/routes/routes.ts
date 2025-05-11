@@ -13,7 +13,7 @@ export default createRouter((router: Router) => {
     router.use('/locations', locationRoutes);
     router.use('/fees', feesRoutes);
     router.use('/payments', paymentRoutes);
-    router.use('/qr-codes', qrRoutes);
+    router.use('/qr', qrRoutes);
     router.use('/member-modifications', memberModificationsRoutes);
     router.use('/membership-changes', membershipChangesRoutes);
 });
