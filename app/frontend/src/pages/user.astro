@@ -1,0 +1,24 @@
+---
+import QRCodeComponent from "@/components/QR_Code";
+import Layout from "@/layouts/Layout.astro";
+import Payment from "@/components/Payment.tsx";
+---
+
+<Layout>
+<div class="tabs tabs-box">
+  <input type="radio" name="tab" class="tab" aria-label="QR Code" checked="checked" />
+  <div class="tab-content bg-base-100 border-base-300 p-6"><QRCodeComponent client:load /></div>
+
+  <input type="radio" name="tab" class="tab" aria-label="Information" />
+  <div class="tab-content bg-base-100 border-base-300 p-6">Information</div>
+
+  <input type="radio" name="tab" class="tab" aria-label="Family Members" />
+  <div class="tab-content bg-base-100 border-base-300 p-6">Family Members</div>
+
+  <input type="radio" name="tab" class="tab" aria-label="Report an issue" />
+  <div class="tab-content bg-base-100 border-base-300 p-6">Report an Issue</div>
+
+  <input type="radio" name="tab" class="tab" aria-label="Payments and fees" />
+  <div class="tab-content bg-base-100 border-base-300 p-6"><Payment client:load/></div>
+</div>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const images = [
+	"/living_fit_images/bowleys_quarters/1.jpg",
+	"/living_fit_images/bowleys_quarters/2.jpg",
+	"/living_fit_images/bowleys_quarters/3.jpg",
+	"/living_fit_images/bowleys_quarters/4.jpg",
+	"/living_fit_images/bowleys_quarters/5.jpg",
+	"/living_fit_images/bowleys_quarters/6.jpg",
+];
+---
+
+<Layout>
+  <main class="max-w-5xl mx-auto p-8 bg-gray-100 text-gray-900 min-h-screen">
+    <h1 class="text-4xl font-bold mb-6">Middle River Location</h1>
+
+    <div class="carousel rounded-box space-x-4">
+      {images.map((src) => (
+        <div class="carousel-item" style="flex: none;">
+          <img src={src} alt="Hampstead photo" class="h-64 w-auto object-cover" />
+        </div>
+      ))}
+    </div>
+    <div style="text-decoration:none; overflow:hidden; max-width:100%; width:500px; height:500px; margin: 0 auto; padding-top: 20px; border-radius: 10px;">
+      <div id="gmap-canvas" style="height:100%; width:100%; max-width:100%; border-radius: 10px;">
+        <iframe
+          style="height:100%; width:100%; border:0; border-radius: 10px;"
+          frameborder="0"
+          src="https://www.google.com/maps/embed/v1/place?q=118+Carroll+Island+Rd,+Middle+River,+MD+21220&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"
+        ></iframe>
+      </div>
+      <a class="embed-map-html" href="https://kbj9qpmy.com/bp" id="enable-map-data">Internet Provider</a>
+    </div>
+  </main>
+</Layout>

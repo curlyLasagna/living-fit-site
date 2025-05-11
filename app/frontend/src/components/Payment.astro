@@ -1,0 +1,68 @@
+<div style="max-width: 400px; margin: 2rem auto; padding: 2rem; border-radius: 1rem; background: #fff; box-shadow: 0 2px 8px #0001;">
+  <h2 style="text-align:center;">Payment & Member Info</h2>
+  <div><b>Name:</b> <span id="user-name"></span></div>
+  <div><b>Email:</b> <span id="user-email"></span></div>
+  <div><b>Location:</b> <span id="user-location"></span></div>
+  <div><b>Membership Status:</b> <span id="user-status"></span></div>
+  <hr style="margin:1rem 0;" />
+  <h3>Payment Info</h3>
+  <div id="payment-info"></div>
+  <div id="error-message" style="color: #b91c1c; margin-top: 1rem;"></div>
+</div>
+
+<script type="module">
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
+
+async function fetchData() {
+  const errorDiv = document.getElementById('error-message');
+  errorDiv.textContent = '';
+  const token = Cookies.get('living_fit_token');
+  if (!token) {
+    errorDiv.textContent = 'You are not logged in.';
+    return;
+  }
+  let memberId;
+  try {
+    memberId = jwtDecode(token).memberId;
+  } catch (e) {
+    errorDiv.textContent = 'Invalid token.';
+    return;
+  }
+
+  // Fetch user data
+  const userRes = await fetch(`http://localhost:3000/api/user/${memberId}`, { credentials: 'include' });
+  if (!userRes.ok) {
+    errorDiv.textContent = 'Could not fetch user data.';
+    return;
+  }
+  const user = await userRes.json();
+  document.getElementById('user-name').textContent = `${user.fname} ${user.lname}`;
+  document.getElementById('user-email').textContent = user.email;
+  document.getElementById('user-status').textContent = user.membershipStatus;
+
+  // Fetch location data
+  let location = null;
+  if (user.locationId) {
+    const locRes = await fetch(`http://localhost:3000/api/locations/${user.locationId}`);
+    location = locRes.ok ? await locRes.json() : null;
+  }
+  document.getElementById('user-location').textContent = location ? location.name : 'Unknown';
+
+  // Fetch payment data
+  const paymentRes = await fetch(`http://localhost:3000/api/payments/member/${memberId}`, { credentials: 'include' });
+  const payment = paymentRes.ok ? await paymentRes.json() : null;
+  const paymentDiv = document.getElementById('payment-info');
+  if (payment) {
+    paymentDiv.innerHTML = `
+      <div><b>Card Holder:</b> ${payment.cardHolderName}</div>
+      <div><b>Card Number:</b> ${payment.cardNumber}</div>
+      <div><b>Expires:</b> ${payment.expirationMonth}/${payment.expirationYear}</div>
+      <div><b>Billing Address:</b> ${payment.billingAddress}</div>
+    `;
+  } else {
+    paymentDiv.textContent = 'No payment info found.';
+  }
+}
+fetchData();
+</script>
