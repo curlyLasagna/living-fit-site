@@ -80,7 +80,7 @@ export type NewMember = InferInsertModel<typeof members>;
 // FAMILY_MEMBERS
 export const familyMembers = pgTable('family_members', {
   familyMemberId: serial('family_member_id').primaryKey(),
-  parentMemberId: integer('parent_member_id').references(() => members.memberId),
+  parentMemberId: integer('parent_member_id').references(() => members.memberId, { onDelete: 'cascade' }),
   locationId: integer('location_id').references(() => locations.locationId),
   name: varchar('name', { length: 255 }),
   qrCodeUuid: uuid('qr_code_uuid'),
@@ -91,8 +91,8 @@ export type NewFamilyMember = InferInsertModel<typeof familyMembers>;
 // QR_CODES
 export const qrCodes = pgTable('qr_codes', {
   qrCodeId: serial('qr_code_id').primaryKey(),
-  memberId: integer('member_id').references(() => members.memberId),
-  familyMemberId: integer('family_member_id').references(() => familyMembers.familyMemberId),
+  entityId: integer('entity_id').notNull(),
+  entityType: varchar('entity_type', { length: 50 }).notNull(),
   locationId: integer('location_id').references(() => locations.locationId),
   status: qrStatus('status'),
   issueDate: date('issue_date').notNull().defaultNow(),
@@ -104,7 +104,7 @@ export type NewQrCode = InferInsertModel<typeof qrCodes>;
 // MEMBERSHIP_CHANGES
 export const membershipChanges = pgTable('membership_changes', {
   changeId: serial('change_id').primaryKey(),
-  memberId: integer('member_id').references(() => members.memberId),
+  memberId: integer('member_id').references(() => members.memberId, { onDelete: "no action" }),
   changeType: varchar('change_type', { length: 50 }),
   oldValue: text('old_value'),
   newValue: text('new_value'),
@@ -175,7 +175,7 @@ export type NewFamilyMemberLog = InferInsertModel<typeof familyMemberLogs>;
 // PAYMENT_INFORMATION
 export const paymentInformation = pgTable('payment_information', {
   paymentInfoId: serial('payment_info_id').primaryKey(),
-  memberId: integer('member_id').references(() => members.memberId).unique(),
+  memberId: integer('member_id').references(() => members.memberId, { onDelete: "cascade" }).unique(),
   cardHolderName: varchar('card_holder_name', { length: 255 }).notNull(),
   cardNumber: varchar('cardNumber', { length: 19 }).notNull(),
   expirationMonth: varchar('expiration_month', { length: 2 }).notNull(),
