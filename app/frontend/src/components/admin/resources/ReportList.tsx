@@ -21,11 +21,13 @@ const ReportFilter = (props: any) => (
 export const ReportList = () => (
     <List filters={<ReportFilter />}>
         <Datagrid>
-            <TextField source="reportId" />
-            <TextField source="issueDescription" />
+            <TextField source="reportId" label="ID" />
+            <TextField source="memberId" label="Member ID" />
+            <TextField source="locationId" label="Location ID" />
+            <TextField source="issueDescription" label="Description" />
+            <TextField source="status" />
             <DateField source="submissionDate" />
             <DateField source="resolutionDate" />
-            <TextField source="status" />
         </Datagrid>
     </List>
 );
