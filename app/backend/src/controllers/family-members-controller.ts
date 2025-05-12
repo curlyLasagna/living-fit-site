@@ -46,6 +46,7 @@ export const handleGetFamilyMembersByParentId = async (req: Request, res: Respon
 export const handleCreateFamilyMember = async (req: Request, res: Response) => {
     try {
         const { parentMemberId, locationId, name } = req.body;
+        console.log('Creating family member:', req.body);
 
         if (!parentMemberId || !name) {
             return res.status(400).json({ message: 'Parent member ID and name are required' });

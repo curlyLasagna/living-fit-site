@@ -23,7 +23,11 @@ interface Location {
     name: string;
 }
 
-const PaymentComponent = () => {
+interface UserProps {
+    memberId: number;
+}
+
+const PaymentComponent: React.FC<UserProps> = ({ memberId }) => {
     const [user, setUser] = useState<User | null>(null);
     const [payment, setPayment] = useState<Payment | null>(null);
     const [location, setLocation] = useState<Location | null>(null);
@@ -35,13 +39,6 @@ const PaymentComponent = () => {
             const token = Cookies.get('living_fit_token');
             if (!token) {
                 setError('You are not logged in.');
-                return;
-            }
-            let memberId;
-            try {
-                memberId = jwtDecode<{ userId: number }>(token).userId;
-            } catch (e) {
-                setError('Invalid token.');
                 return;
             }
             // Fetch user data
@@ -62,7 +59,7 @@ const PaymentComponent = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [memberId]);
 
     return (
         <div className="card bg-base-100 shadow-xl max-w-md mx-auto my-8">

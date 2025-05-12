@@ -112,7 +112,22 @@ async function main() {
             billingAddress: "123 Main St",
         },
     ];
-    await db.insert(schema.paymentInformation).values(paymentInformationData);
+    const insertedPaymentInfos = await db.insert(schema.paymentInformation).values(paymentInformationData).returning();
+
+    // Insert a transaction
+    await db.insert(schema.transactions).values({
+        memberId: insertedMembers[0].memberId,
+        paymentInfoId: insertedPaymentInfos[0].paymentInfoId,
+        price: "49.99",
+        transactionDate: new Date(),
+        type: 'monthly fee',
+    });
+
+    // Insert a monthly member fee
+    await db.insert(schema.monthlyMemberFees).values({
+        memberId: insertedMembers[0].memberId,
+        fees: "50.00",
+    });
 
     console.log("Database seeded successfully!");
 }

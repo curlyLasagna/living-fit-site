@@ -1,5 +1,4 @@
 import express from 'express';
-import { authenticateToken } from '../middleware/auth';
 import {
     handleGetAllFamilyMembers,
     handleGetFamilyMemberById,
@@ -12,7 +11,6 @@ import {
 
 const router = express.Router();
 
-// GET all family members (admin only)
 router.get('/', handleGetAllFamilyMembers);
 
 // GET a specific family member by ID
