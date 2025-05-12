@@ -7,6 +7,12 @@ import {
     TextInput,
     ReferenceInput,
     SelectInput,
+    Create,
+    SimpleForm,
+    Edit,
+    EditButton,
+    DeleteButton,
+    required,
 } from 'react-admin';
 
 const ReportFilter = (props: any) => (
@@ -16,6 +22,38 @@ const ReportFilter = (props: any) => (
             <SelectInput optionText="name" />
         </ReferenceInput>
     </Filter>
+);
+
+// Create form component
+export const ReportCreate = () => (
+    <Create>
+        <SimpleForm>
+            <ReferenceInput label="Member" source="memberId" reference="users">
+                <SelectInput optionText="email" />
+            </ReferenceInput>
+            <ReferenceInput label="Location" source="locationId" reference="locations">
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            <TextInput source="issueDescription" label="Description" validate={required()} />
+            <TextInput source="status" validate={required()} />
+        </SimpleForm>
+    </Create>
+);
+
+// Edit form component
+export const ReportEdit = () => (
+    <Edit>
+        <SimpleForm>
+            <ReferenceInput label="Member" source="memberId" reference="users">
+                <SelectInput optionText="email" />
+            </ReferenceInput>
+            <ReferenceInput label="Location" source="locationId" reference="locations">
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            <TextInput source="issueDescription" label="Description" validate={required()} />
+            <TextInput source="status" validate={required()} />
+        </SimpleForm>
+    </Edit>
 );
 
 export const ReportList = () => (
@@ -28,6 +66,8 @@ export const ReportList = () => (
             <TextField source="status" />
             <DateField source="submissionDate" />
             <DateField source="resolutionDate" />
+            <EditButton />
+            <DeleteButton mutationMode="pessimistic" />
         </Datagrid>
     </List>
 );

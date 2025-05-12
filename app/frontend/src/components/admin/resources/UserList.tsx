@@ -8,6 +8,12 @@ import {
     TextInput,
     ReferenceInput,
     SelectInput,
+    Create,
+    SimpleForm,
+    Edit,
+    EditButton,
+    DeleteButton,
+    required,
 } from 'react-admin';
 
 // Custom field to handle null values
@@ -27,6 +33,38 @@ const UserFilter = (props: any) => (
     </Filter>
 );
 
+// Create form component
+export const UserCreate = () => (
+    <Create>
+        <SimpleForm>
+            <TextInput source="fname" label="First Name" validate={required()} />
+            <TextInput source="lname" label="Last Name" validate={required()} />
+            <TextInput source="email" type="email" validate={required()} />
+            <TextInput source="phone" />
+            <TextInput source="address" />
+            <ReferenceInput label="Location" source="locationId" reference="locations">
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+        </SimpleForm>
+    </Create>
+);
+
+// Edit form component
+export const UserEdit = () => (
+    <Edit>
+        <SimpleForm>
+            <TextInput source="fname" label="First Name" validate={required()} />
+            <TextInput source="lname" label="Last Name" validate={required()} />
+            <TextInput source="email" type="email" validate={required()} />
+            <TextInput source="phone" />
+            <TextInput source="address" />
+            <ReferenceInput label="Location" source="locationId" reference="locations">
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+        </SimpleForm>
+    </Edit>
+);
+
 export const UserList = () => (
     <List filters={<UserFilter />}>
         <Datagrid>
@@ -39,6 +77,8 @@ export const UserList = () => (
             <NullableTextField source="membershipStatus" />
             <NullableTextField source="locationId" label="Location ID" />
             <NullableTextField source="address" />
+            <EditButton />
+            <DeleteButton mutationMode="pessimistic" />
         </Datagrid>
     </List>
 );
