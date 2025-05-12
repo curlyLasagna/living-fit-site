@@ -82,8 +82,8 @@ async function main() {
     // Insert qr codes
     const qrCodesData = [
         {
-            memberId: insertedMembers[0].memberId,
-            familyMemberId: insertedFamilyMembers[0].familyMemberId,
+            entityId: insertedMembers[0].memberId,
+            entityType: "member",
             locationId: insertedLocations[0].locationId,
             status: "active",
             issueDate: new Date(),
