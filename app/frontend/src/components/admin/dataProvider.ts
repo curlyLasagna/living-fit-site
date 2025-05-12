@@ -49,9 +49,12 @@ const dataProvider = {
             };
         }
         if (resource === 'payments') {
-            const { json } = await httpClient(`http://localhost:3000/api/payments/${params.id}`);
+            const { json } = await httpClient(`http://localhost:3000/api/payment-info/${params.id}`);
             return {
-                data: { ...json, id: json.paymentInfoId },
+                data: {
+                    ...json,
+                    id: json.paymentInfoId
+                },
             };
         }
         return simpleRestProvider('http://localhost:3000/api', httpClient).getOne(resource, params);
@@ -99,14 +102,24 @@ const dataProvider = {
             };
         }
         if (resource === 'payments') {
-            const { json } = await httpClient('http://localhost:3000/api/payments');
-            return {
-                data: json.map((item: any) => ({
-                    ...item,
-                    id: item.paymentInfoId
-                })),
-                total: json.length,
-            };
+            try {
+                console.log('Fetching payments...');
+                const { json } = await httpClient('http://localhost:3000/api/payments');
+                console.log('Payments response:', json);
+                return {
+                    data: json.map((item: any) => ({
+                        ...item,
+                        id: item.paymentInfoId
+                    })),
+                    total: json.length,
+                };
+            } catch (error) {
+                console.error('Error fetching payments:', error);
+                return {
+                    data: [],
+                    total: 0,
+                };
+            }
         }
         return simpleRestProvider('http://localhost:3000/api', httpClient).getList(resource, params);
     },
@@ -154,7 +167,10 @@ const dataProvider = {
                 body: JSON.stringify(params.data),
             });
             return {
-                data: { ...json, id: json.paymentInfoId },
+                data: {
+                    ...json,
+                    id: json.paymentInfoId
+                },
             };
         }
         return simpleRestProvider('http://localhost:3000/api', httpClient).create(resource, params);
@@ -203,7 +219,10 @@ const dataProvider = {
                 body: JSON.stringify(params.data),
             });
             return {
-                data: { ...json, id: json.paymentInfoId },
+                data: {
+                    ...json,
+                    id: json.paymentInfoId
+                },
             };
         }
         return simpleRestProvider('http://localhost:3000/api', httpClient).update(resource, params);

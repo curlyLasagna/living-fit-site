@@ -5,7 +5,7 @@ import { UserList } from './resources/UserList';
 import { ReportList } from './resources/ReportList';
 import { LocationList } from './resources/LocationList';
 import { FeesList, FeesCreate, FeesEdit } from './resources/FeesList';
-import { PaymentList, PaymentCreate, PaymentEdit } from './resources/PaymentList.tsx';
+import { PaymentList, PaymentCreate, PaymentEdit } from './resources/PaymentList';
 
 const AdminDashboard = () => {
     return (

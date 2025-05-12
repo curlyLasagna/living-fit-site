@@ -4,6 +4,8 @@ import { Dashboard } from './Dashboard';
 import { UserList } from './resources/UserList';
 import { ReportList } from './resources/ReportList';
 import { LocationList, LocationCreate, LocationEdit } from './resources/LocationList';
+import { FeesList, FeesCreate, FeesEdit } from './resources/FeesList';
+import { PaymentList, PaymentCreate, PaymentEdit } from './resources/PaymentList';
 import { theme } from './theme';
 
 const AdminWrapper = () => {
@@ -21,6 +23,18 @@ const AdminWrapper = () => {
                 list={LocationList} 
                 create={LocationCreate}
                 edit={LocationEdit}
+            />
+            <Resource 
+                name="fees" 
+                list={FeesList} 
+                create={FeesCreate}
+                edit={FeesEdit}
+            />
+            <Resource 
+                name="payments" 
+                list={PaymentList} 
+                create={PaymentCreate}
+                edit={PaymentEdit}
             />
         </Admin>
     );

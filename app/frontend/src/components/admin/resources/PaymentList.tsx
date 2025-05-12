@@ -109,12 +109,12 @@ const MaskedCardNumber = (props: any) => {
 const PaymentList = () => (
     <List filters={<PaymentFilter />}>
         <Datagrid>
-            <TextField source="paymentInfoId" label="ID" />
+            <TextField source="id" label="ID" />
             <ReferenceField 
                 label="Member" 
                 source="memberId" 
                 reference="users"
-                link="show"
+                link={false}
             >
                 <TextField source="email" />
             </ReferenceField>
