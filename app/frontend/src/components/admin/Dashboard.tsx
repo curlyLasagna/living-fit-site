@@ -38,7 +38,7 @@ const FeeStatistics = () => {
                     Fee Statistics
                 </Typography>
                 <Grid container spacing={2}>
-                    <Grid item xs={6} md={3}>
+                    <Grid xs={6} md={3}>
                         <Box>
                             <Typography variant="subtitle2" color="textSecondary">
                                 Average Monthly Fee
@@ -48,7 +48,7 @@ const FeeStatistics = () => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6} md={3}>
+                    <Grid xs={6} md={3}>
                         <Box>
                             <Typography variant="subtitle2" color="textSecondary">
                                 Average Joining Fee
@@ -58,7 +58,7 @@ const FeeStatistics = () => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6} md={3}>
+                    <Grid xs={6} md={3}>
                         <Box>
                             <Typography variant="subtitle2" color="textSecondary">
                                 Average Annual Fee
@@ -68,7 +68,7 @@ const FeeStatistics = () => {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={6} md={3}>
+                    <Grid xs={6} md={3}>
                         <Box>
                             <Typography variant="subtitle2" color="textSecondary">
                                 Total Fee Records

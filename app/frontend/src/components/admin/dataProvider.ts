@@ -16,7 +16,18 @@ const dataProvider = {
         if (resource === 'users') {
             const { json } = await httpClient(`http://localhost:3000/api/user/${params.id}`);
             return {
-                data: { ...json, id: json.memberId },
+                data: {
+                    ...json,
+                    id: json.memberId,
+                    fname: json.fname || '',
+                    lname: json.lname || '',
+                    email: json.email || '',
+                    phone: json.phone || '',
+                    address: json.address || '',
+                    joinDate: json.joinDate || '',
+                    membershipStatus: json.membershipStatus || '',
+                    locationId: json.locationId || null
+                },
             };
         }
         if (resource === 'reports') {
@@ -35,6 +46,12 @@ const dataProvider = {
             const { json } = await httpClient(`http://localhost:3000/api/fees/${params.id}`);
             return {
                 data: { ...json, id: json.feeId },
+            };
+        }
+        if (resource === 'payments') {
+            const { json } = await httpClient(`http://localhost:3000/api/payments/${params.id}`);
+            return {
+                data: { ...json, id: json.paymentInfoId },
             };
         }
         return simpleRestProvider('http://localhost:3000/api', httpClient).getOne(resource, params);
@@ -81,6 +98,16 @@ const dataProvider = {
                 total: json.length,
             };
         }
+        if (resource === 'payments') {
+            const { json } = await httpClient('http://localhost:3000/api/payments');
+            return {
+                data: json.map((item: any) => ({
+                    ...item,
+                    id: item.paymentInfoId
+                })),
+                total: json.length,
+            };
+        }
         return simpleRestProvider('http://localhost:3000/api', httpClient).getList(resource, params);
     },
 
@@ -119,6 +146,15 @@ const dataProvider = {
             });
             return {
                 data: { ...json, id: json.feeId },
+            };
+        }
+        if (resource === 'payments') {
+            const { json } = await httpClient('http://localhost:3000/api/payments', {
+                method: 'POST',
+                body: JSON.stringify(params.data),
+            });
+            return {
+                data: { ...json, id: json.paymentInfoId },
             };
         }
         return simpleRestProvider('http://localhost:3000/api', httpClient).create(resource, params);
@@ -161,6 +197,15 @@ const dataProvider = {
                 data: { ...json, id: json.feeId },
             };
         }
+        if (resource === 'payments') {
+            const { json } = await httpClient(`http://localhost:3000/api/payments/${params.id}`, {
+                method: 'PUT',
+                body: JSON.stringify(params.data),
+            });
+            return {
+                data: { ...json, id: json.paymentInfoId },
+            };
+        }
         return simpleRestProvider('http://localhost:3000/api', httpClient).update(resource, params);
     },
 
@@ -197,7 +242,31 @@ const dataProvider = {
                 data: { id: params.id },
             };
         }
+        if (resource === 'payments') {
+            await httpClient(`http://localhost:3000/api/payments/${params.id}`, {
+                method: 'DELETE',
+            });
+            return {
+                data: { id: params.id },
+            };
+        }
         return simpleRestProvider('http://localhost:3000/api', httpClient).delete(resource, params);
+    },
+
+    getMany: async (resource: string, params: any) => {
+        if (resource === 'locations') {
+            const { json } = await httpClient(`http://localhost:3000/api/locations`);
+            const filteredData = json.filter((item: any) => 
+                params.ids.includes(item.locationId)
+            );
+            return {
+                data: filteredData.map((item: any) => ({
+                    ...item,
+                    id: item.locationId
+                }))
+            };
+        }
+        return simpleRestProvider('http://localhost:3000/api', httpClient).getMany(resource, params);
     },
 };
 

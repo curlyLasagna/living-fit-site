@@ -14,15 +14,15 @@ import {
     EditButton,
     DeleteButton,
     required,
+    ReferenceField,
 } from 'react-admin';
 
 // Custom field to handle null values
-const NullableTextField = (props: any) => (
-    <TextField 
-        {...props} 
-        render={(record: any) => record[props.source] || '-'} 
-    />
-);
+const NullableTextField = (props: any) => {
+    const { record, source } = props;
+    const value = record?.[source] || '-';
+    return <TextField {...props} record={{ ...record, [source]: value }} />;
+};
 
 const UserFilter = (props: any) => (
     <Filter {...props}>
@@ -34,7 +34,7 @@ const UserFilter = (props: any) => (
 );
 
 // Create form component
-export const UserCreate = () => (
+const UserCreate = () => (
     <Create>
         <SimpleForm>
             <TextInput source="fname" label="First Name" validate={required()} />
@@ -50,7 +50,7 @@ export const UserCreate = () => (
 );
 
 // Edit form component
-export const UserEdit = () => (
+const UserEdit = () => (
     <Edit>
         <SimpleForm>
             <TextInput source="fname" label="First Name" validate={required()} />
@@ -65,20 +65,29 @@ export const UserEdit = () => (
     </Edit>
 );
 
-export const UserList = () => (
+const UserList = () => (
     <List filters={<UserFilter />}>
         <Datagrid>
-            <TextField source="memberId" label="ID" />
-            <NullableTextField source="fname" label="First Name" />
-            <NullableTextField source="lname" label="Last Name" />
+            <TextField source="id" label="ID" />
+            <TextField source="fname" label="First Name" />
+            <TextField source="lname" label="Last Name" />
             <EmailField source="email" />
-            <NullableTextField source="phone" />
-            <NullableTextField source="joinDate" />
-            <NullableTextField source="membershipStatus" />
-            <NullableTextField source="locationId" label="Location ID" />
-            <NullableTextField source="address" />
+            <TextField source="phone" />
+            <DateField source="joinDate" />
+            <TextField source="membershipStatus" />
+            <ReferenceField 
+                label="Location" 
+                source="locationId" 
+                reference="locations"
+                link={false}
+            >
+                <TextField source="name" />
+            </ReferenceField>
+            <TextField source="address" />
             <EditButton />
             <DeleteButton mutationMode="pessimistic" />
         </Datagrid>
     </List>
 );
+
+export { UserList, UserCreate, UserEdit };

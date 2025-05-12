@@ -5,6 +5,7 @@ import { UserList } from './resources/UserList';
 import { ReportList } from './resources/ReportList';
 import { LocationList } from './resources/LocationList';
 import { FeesList, FeesCreate, FeesEdit } from './resources/FeesList';
+import { PaymentList, PaymentCreate, PaymentEdit } from './resources/PaymentList.tsx';
 
 const AdminDashboard = () => {
     return (
@@ -33,6 +34,13 @@ const AdminDashboard = () => {
                 create={FeesCreate} 
                 edit={FeesEdit} 
                 options={{ label: 'Fees' }}
+            />
+            <Resource 
+                name="payments" 
+                list={PaymentList} 
+                create={PaymentCreate} 
+                edit={PaymentEdit} 
+                options={{ label: 'Payments' }}
             />
         </Admin>
     );
