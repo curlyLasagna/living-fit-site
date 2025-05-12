@@ -1,9 +1,9 @@
 import { Title, useGetList, useGetOne } from 'react-admin';
-import { 
-    Card, 
-    CardContent, 
-    Typography, 
-    Grid, 
+import {
+    Card,
+    CardContent,
+    Typography,
+    Grid,
     Box,
     Stack
 } from '@mui/material';
@@ -113,8 +113,8 @@ const RecentFees = () => {
                                 <LocationName locationId={fee.locationId} />
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Monthly: {formatCurrency(fee.baseMonthlyFee)} | 
-                                Joining: {formatCurrency(fee.joiningFee)} | 
+                                Monthly: {formatCurrency(fee.baseMonthlyFee)} |
+                                Joining: {formatCurrency(fee.joiningFee)} |
                                 Annual: {formatCurrency(fee.annualFee)}
                             </Typography>
                             <Typography variant="caption" color="textSecondary">
