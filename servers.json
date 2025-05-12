@@ -1,0 +1,14 @@
+{
+  "Servers": {
+    "PostgreSQL": {
+      "Name": "Living Fit DB",
+      "Group": "Servers",
+      "Host": "host.internal.docker",
+      "Port": 5432,
+      "MaintenanceDB": "living_fit",
+      "Username": "admin",
+      "SSLMode": "prefer"
+    }
+  }
+}
+

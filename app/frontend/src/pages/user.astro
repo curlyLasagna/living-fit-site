@@ -9,7 +9,7 @@ import UserDetails from "@/components/Member";
 import jwt from "jsonwebtoken";
 const token = Astro.cookies.get("living_fit_token")?.value;
 
-const memberId = jwt.verify(token, "skrt")?.userId;
+const memberId = jwt.verify(token, "skrrt")?.userId;
 ---
 
 <Layout>

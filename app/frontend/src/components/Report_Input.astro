@@ -8,7 +8,7 @@ let reports = [];
 const token = Astro.cookies.get("living_fit_token")?.value;
 if (token) {
 	try {
-		const decoded = jwt.verify(token, "skrt");
+		const decoded = jwt.verify(token, "skrrt");
 		memberId = decoded?.userId;
 		// Fetch user data to get locationId
 		if (memberId) {
