@@ -27,6 +27,13 @@ export const modificationTypes = pgEnum('modification_types', [
   'password_change',
   'family_member_update'
 ]);
+export const transactionType = pgEnum('transaction_type', [
+  'monthly fee',
+  'guest fee',
+  'others',
+  'joining fee',
+  'annual fee',
+]);
 
 // LOCATIONS
 export const locations = pgTable('locations', {
@@ -67,7 +74,7 @@ export const members = pgTable("members", {
   fname: varchar("fname", { length: 255 }),
   lname: varchar("lname", { length: 255 }),
   address: varchar("address", { length: 255 }),
-  email: varchar("email", { length: 255 }).unique(),
+  email: varchar("email", { length: 255 }),
   phone: varchar("phone", { length: 20 }),
   password: varchar("password", { length: 255 }),
   joinDate: date("join_date").notNull().defaultNow(),
@@ -164,7 +171,7 @@ export type NewStaffLog = InferInsertModel<typeof staffLogs>;
 // FAMILY_MEMBER_LOGS
 export const familyMemberLogs = pgTable('family_member_logs', {
   logId: serial('log_id').primaryKey(),
-  familyMemberId: integer('family_member_id').references(() => familyMembers.familyMemberId),
+  familyMemberId: integer('family_member_id').references(() => familyMembers.familyMemberId, { onDelete: 'cascade' }),
   parentMemberId: integer('parent_member_id').references(() => members.memberId),
   action: familyMemberActions('familyMemberActions').notNull(),
   timestamp: timestamp('timestamp').defaultNow(),
@@ -186,3 +193,24 @@ export const paymentInformation = pgTable('payment_information', {
 });
 export type PaymentInformation = InferSelectModel<typeof paymentInformation>;
 export type NewPaymentInformation = InferInsertModel<typeof paymentInformation>;
+
+// TRANSACTIONS
+export const transactions = pgTable('transactions', {
+  transactionId: serial('transaction_id').primaryKey(),
+  memberId: integer('member_id').references(() => members.memberId),
+  paymentInfoId: integer('payment_info_id').references(() => paymentInformation.paymentInfoId),
+  price: decimal('price', { precision: 10, scale: 2 }), // Use decimal for money
+  transactionDate: timestamp('transaction_date').defaultNow(),
+  type: transactionType('type'),
+});
+export type Transaction = InferSelectModel<typeof transactions>;
+export type NewTransaction = InferInsertModel<typeof transactions>;
+
+// MONTHLY_MEMBER_FEES
+export const monthlyMemberFees = pgTable('monthly_member_fees', {
+  id: serial('id').primaryKey(),
+  memberId: integer('member_id').references(() => members.memberId),
+  fees: decimal('fees', { precision: 10, scale: 2 }),
+});
+export type MonthlyMemberFee = InferSelectModel<typeof monthlyMemberFees>;
+export type NewMonthlyMemberFee = InferInsertModel<typeof monthlyMemberFees>;

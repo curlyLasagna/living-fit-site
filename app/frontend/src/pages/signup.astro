@@ -225,8 +225,7 @@ import { LocationDropDown } from "@/components/LocationDropDown";
     });
   }
 
-  if (form) {
-    form.addEventListener("submit", async (e) => {
+    form?.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const formData = new FormData(form);
@@ -235,19 +234,17 @@ import { LocationDropDown } from "@/components/LocationDropDown";
       data.locationId = selected_location.get().locationId
       console.log("Data sent", data)
 
-      try {
-        const response = await fetch("http://localhost:3000/api/user/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
+      const response = await fetch("http://localhost:3000/api/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
         if (response.ok && response.status === 201) {
           const userData = await response.json();
           console.log("User registered successfully:",  userData);
 
           // After successful registration, create payment information
-          // try {
             const paymentData = {
               // Attach the new member id to the payment table
               memberId: userData.memberId,
@@ -284,28 +281,28 @@ import { LocationDropDown } from "@/components/LocationDropDown";
               body: JSON.stringify(paymentData),
             });
 
-            // if (paymentResponse.ok) {
-            //   window.location.href = "/success";
-            // } else {
-            //   const message = await paymentResponse.text();
-            //   alert(`Payment information setup failed: ${message}`);
-            //   // Still redirect to success since user registration was successful
-            //   window.location.href = "/success";
-            // }
-          // } catch (paymentErr) {
-          //   console.error("Payment setup error:", paymentErr);
-          //   // Still redirect to success since user registration was successful
-          //   window.location.href = "/success";
-          // }
+            const paymentRes = await paymentResponse.json();
+              const transactionData = {
+              memberId: userData.memberId,
+              paymentInfoId: paymentRes.paymentInfoId,
+              price: 100,
+              type: "monthly fee",
+            };
+
+            await fetch("http://localhost:3000/api/transaction", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(transactionData),
+            });
+
+            // Redirect to success page
+            window.location.href = "/success";
         } else {
           const message = await response.text();
           alert(`Registration failed: ${message}`);
         }
-      } catch (err) {
-        console.error("Network error:", err);
-      }
     });
-  } else {
-    console.error("Form not found");
-  }
+
 </script>

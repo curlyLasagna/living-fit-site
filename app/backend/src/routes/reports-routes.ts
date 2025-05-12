@@ -13,8 +13,6 @@ import {
 
 const router = express.Router();
 
-// Apply authentication middleware to all routes
-
 // Reports routes
 router.get('/', handleGetAllReports as RequestHandler);
 router.get('/:reportId', handleGetReportById as RequestHandler);
