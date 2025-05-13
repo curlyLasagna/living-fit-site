@@ -7,7 +7,7 @@ const JWT_CONFIG: JWT.SignOptions = {
     expiresIn: '7d',
 };
 
-const { JWT_SECRET } = process.env || "skrrt";
+const JWT_SECRET = "skrrt";
 
 export default function generateToken(userId: string): string {
     return JWT.sign({ userId }, JWT_SECRET, JWT_CONFIG);
