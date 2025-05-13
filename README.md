@@ -37,3 +37,4 @@ Allows members to:
 
 2. `cd app/backend`
 3. `pnpm db-push` to apply db-schema
+4. `pnpm db-seed` to apply seed data
