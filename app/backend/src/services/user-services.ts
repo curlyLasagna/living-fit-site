@@ -14,6 +14,21 @@ import {
 import { db } from '../utils/db';
 import generateToken from "../middleware/auth";
 
+// Get all users
+export async function getAllMembers() {
+    return db.select({
+        memberId: members.memberId,
+        fname: members.fname,
+        lname: members.lname,
+        address: members.address,
+        email: members.email,
+        phone: members.phone,
+        joinDate: members.joinDate,
+        membershipStatus: members.membershipStatus,
+        locationId: members.locationId
+    }).from(members);
+}
+
 // User Registration
 export async function addMember(user: NewMember) {
     const saltRounds = 5;

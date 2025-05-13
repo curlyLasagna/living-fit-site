@@ -1,6 +1,6 @@
 import express from 'express';
-import { authenticateToken } from '../middleware/auth';
 import {
+    handleGetUsers,
     handleAddMember,
     handleGetMemberById,
     handleUpdateMember,
@@ -18,6 +18,9 @@ import {
 
 const router = express.Router();
 
+// Get all users
+router.get('/all', handleGetUsers);
+
 // Member Management Routes
 router.post('/register', handleAddMember);
 
@@ -25,27 +28,27 @@ router.post('/login', handleLogin);
 
 router.post('/logout', handleLogout)
 
-router.get('/:memberId', authenticateToken, handleGetMemberById);
+router.get('/:memberId', handleGetMemberById);
 
-router.patch('/:memberId', authenticateToken, handleUpdateMember);
+router.patch('/:memberId', handleUpdateMember);
 
-router.patch('/:memberId/status', authenticateToken, handleUpdateMembershipStatus);
+router.patch('/:memberId/status', handleUpdateMembershipStatus);
 
 // Family Member Routes
-router.post('/:memberId/family', authenticateToken, handleAddFamilyMember);
+router.post('/:memberId/family', handleAddFamilyMember);
 
-router.get('/:memberId/family', authenticateToken, handleGetFamilyMembers);
+router.get('/:memberId/family', handleGetFamilyMembers);
 
-router.delete('/family/:familyMemberId', authenticateToken, handleRemoveFamilyMember);
+router.delete('/family/:familyMemberId', handleRemoveFamilyMember);
 
 // QR Code Routes
-router.get('/:memberId/qrcodes', authenticateToken, handleGetMemberQRCodes);
+router.get('/:memberId/qrcodes', handleGetMemberQRCodes);
 
-router.patch('/qrcodes/:qrCodeId', authenticateToken, handleUpdateQRCodeStatus);
+router.patch('/qrcodes/:qrCodeId', handleUpdateQRCodeStatus);
 
 // Member History Routes
-router.get('/:memberId/changes', authenticateToken, handleGetMembershipChanges);
+router.get('/:memberId/changes', handleGetMembershipChanges);
 
-router.get('/:memberId/modifications', authenticateToken, handleGetMemberModifications);
+router.get('/:memberId/modifications', handleGetMemberModifications);
 
 export default router;

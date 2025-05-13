@@ -1,5 +1,4 @@
 import express from 'express';
-import { authenticateToken } from '../middleware/auth';
 import {
     handleGetAllMembershipChanges,
     handleGetMembershipChangeById,
@@ -10,9 +9,6 @@ import {
 } from '../controllers/membership-changes-controller';
 
 const router = express.Router();
-
-// Apply authentication middleware to all routes
-router.use(authenticateToken);
 
 // Membership Changes routes
 router.get('/', handleGetAllMembershipChanges);

@@ -22,7 +22,7 @@ export const handleGetAllReports = async (req: Request, res: Response) => {
 
 export const handleGetReportById = async (req: Request, res: Response) => {
     try {
-        const reportId = parseInt(req.params.reportId);
+        const reportId = Number.parseInt(req.params.reportId);
         const report = await getReportById(reportId);
 
         if (!report) {
@@ -37,7 +37,7 @@ export const handleGetReportById = async (req: Request, res: Response) => {
 
 export const handleGetReportsByMemberId = async (req: Request, res: Response) => {
     try {
-        const memberId = parseInt(req.params.memberId);
+        const memberId = Number.parseInt(req.params.memberId);
         const memberReports = await getReportsByMemberId(memberId);
         res.status(200).json(memberReports);
     } catch (error) {
@@ -47,7 +47,7 @@ export const handleGetReportsByMemberId = async (req: Request, res: Response) =>
 
 export const handleGetReportsByLocationId = async (req: Request, res: Response) => {
     try {
-        const locationId = parseInt(req.params.locationId);
+        const locationId = Number.parseInt(req.params.locationId);
         const locationReports = await getReportsByLocationId(locationId);
         res.status(200).json(locationReports);
     } catch (error) {
@@ -108,7 +108,7 @@ export const handleUpdateReport = async (req: Request, res: Response) => {
             locationId,
             issueDescription,
             status,
-            resolutionDate: resolutionDate ? new Date(resolutionDate) : undefined
+            resolutionDate: resolutionDate ? new Date(resolutionDate).toISOString() : ""
         });
 
         if (!updatedReport) {
@@ -123,7 +123,7 @@ export const handleUpdateReport = async (req: Request, res: Response) => {
 
 export const handleUpdateReportStatus = async (req: Request, res: Response) => {
     try {
-        const reportId = parseInt(req.params.reportId);
+        const reportId = Number.parseInt(req.params.reportId);
         const { status, resolutionDate } = req.body;
 
         const validStatuses = ['open', 'in_progress', 'closed'];

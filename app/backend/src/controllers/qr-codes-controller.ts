@@ -36,7 +36,7 @@ export const handleGetQRCodeById = async (req: Request, res: Response) => {
 
 export const handleGetMemberQRCodes = async (req: Request, res: Response) => {
     try {
-        const memberId = parseInt(req.params.memberId);
+        const memberId = Number.parseInt(req.params.memberId);
         const qrCodes = await getMemberQRCodes(memberId);
         res.status(200).json(qrCodes);
     } catch (error) {
@@ -46,7 +46,7 @@ export const handleGetMemberQRCodes = async (req: Request, res: Response) => {
 
 export const handleGetFamilyMemberQRCodes = async (req: Request, res: Response) => {
     try {
-        const familyMemberId = parseInt(req.params.familyMemberId);
+        const familyMemberId = Number.parseInt(req.params.familyMemberId); // Use Number.parseInt
         const qrCodes = await getFamilyMemberQRCodes(familyMemberId);
         res.status(200).json(qrCodes);
     } catch (error) {
@@ -56,14 +56,20 @@ export const handleGetFamilyMemberQRCodes = async (req: Request, res: Response) 
 
 export const handleCreateQRCode = async (req: Request, res: Response) => {
     try {
-        const { memberId, familyMemberId, locationId, status } = req.body;
+        const { entityId: entity_id, entityType: entity_Type, locationId: location_id, status } = req.body;
+
+        console.log('Creating QR code with data:', req.body);
+
+        // if (!['member', 'family_member'].includes(entity_Type)) {
+        //     return res.status(400).json({ message: 'Invalid entity type' });
+        // }
 
         const newQRCode = await createQRCode({
-            memberId,
-            familyMemberId,
-            locationId,
+            entityId: entity_id,
+            entityType: entity_Type,
+            locationId: location_id,
             status,
-            issueDate: new Date()
+            issueDate: new Date().toISOString()
         });
 
         res.status(201).json(newQRCode);

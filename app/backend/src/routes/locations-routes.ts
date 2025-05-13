@@ -6,7 +6,6 @@ import {
     handleUpdateLocation,
     handleDeleteLocation
 } from '../controllers/locations-controller';
-import { authenticateToken } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -17,12 +16,12 @@ router.get('/', handleGetAllLocations);
 router.get('/:id', handleGetLocationById);
 
 // POST /locations - Create a new location
-router.post('/', authenticateToken, handleCreateLocation);
+router.post('/', handleCreateLocation);
 
 // PUT /locations/:id - Update a location
-router.put('/:id', authenticateToken, handleUpdateLocation);
+router.put('/:id', handleUpdateLocation);
 
 // DELETE /locations/:id - Delete a location
-router.delete('/:id', authenticateToken, handleDeleteLocation);
+router.delete('/:id', handleDeleteLocation);
 
 export default router;

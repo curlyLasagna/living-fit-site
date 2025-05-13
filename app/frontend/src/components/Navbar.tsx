@@ -6,13 +6,12 @@ const Navbar = () => {
   const [userName, setUserName] = useState(null);
 
   useEffect(() => {
-    const token = Cookies.get('living_fit_token'); // Get the token from cookies
+    const token = Cookies.get('living_fit_token');
     if (!token) {
       console.log('No token found');
       return;
     }
     const { userId } = jwtDecode(token)
-    console.log('User id:', userId);
 
     if (token) {
       fetch(`http://localhost:3000/api/user/${userId}`, {
@@ -50,7 +49,6 @@ const Navbar = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         credentials: 'include'
       });
@@ -83,9 +81,9 @@ const Navbar = () => {
             <li>
               <a href="#">Parent</a>
               <ul className="p-2">
-                <li><a href="#">Hampstead</a></li>
-                <li><a href="#">Glen Burnie</a></li>
-                <li><a href="#">Middle River</a></li>
+                <li><a href="/locations/Hampstead">Hampstead</a></li>
+                <li><a href="/locations/GlenBurnie">Glen Burnie</a></li>
+                <li><a href="/locations/MiddleRiver">Middle River</a></li>
               </ul>
             </li>
             <li><a href="#">Item 3</a></li>
@@ -100,9 +98,9 @@ const Navbar = () => {
             <details>
               <summary>Locations</summary>
               <ul className="p-2">
-                <li><a href="#">Hampstead</a></li>
-                <li><a href="#">Glen Burnie</a></li>
-                <li><a href="#">Middle River</a></li>
+                <li><a href="/locations/Hampstead">Hampstead</a></li>
+                <li><a href="/locations/GlenBurnie">Glen Burnie</a></li>
+                <li><a href="/locations/MiddleRiver">Middle River</a></li>
               </ul>
             </details>
           </li>
@@ -118,7 +116,6 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            {console.log('No user logged in')}
             <a className="btn btn-primary mr-2" href="/signup">Join Now</a>
             <a href="/login" className="btn btn-primary">Log in</a>
           </>

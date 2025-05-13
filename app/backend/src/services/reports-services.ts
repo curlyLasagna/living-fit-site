@@ -26,7 +26,7 @@ export const getReportsByStatus = async (status: 'open' | 'in_progress' | 'close
 export const createReport = async (data: Omit<NewReport, 'submissionDate'>): Promise<Report> => {
     const reportData: NewReport = {
         ...data,
-        submissionDate: new Date()
+        submissionDate: new Date().toISOString()
     };
 
     const result = await db.insert(reports).values(reportData).returning();

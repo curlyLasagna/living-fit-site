@@ -7,7 +7,6 @@ import {
     handleUpdatePaymentInformation,
     handleDeletePaymentInformation
 } from '../controllers/payment-controller';
-import { authenticateToken } from '../middleware/auth';
 
 const router = express.Router();
 
@@ -17,18 +16,18 @@ const router = express.Router();
 router.get('/', handleGetAllPaymentInformation);
 
 // GET payment information by ID
-router.get('/:paymentInfoId', authenticateToken, handleGetPaymentInformationById);
+router.get('/:paymentInfoId', handleGetPaymentInformationById);
 
 // GET payment information by member ID
-router.get('/member/:memberId', authenticateToken, handleGetPaymentInformationByMemberId);
+router.get('/member/:memberId', handleGetPaymentInformationByMemberId);
 
 // POST create new payment information
 router.post('/', handleCreatePaymentInformation);
 
 // PUT update payment information
-router.put('/:paymentInfoId', authenticateToken, handleUpdatePaymentInformation);
+router.put('/:paymentInfoId', handleUpdatePaymentInformation);
 
 // DELETE payment information
-router.delete('/:paymentInfoId', authenticateToken, handleDeletePaymentInformation);
+router.delete('/:paymentInfoId', handleDeletePaymentInformation);
 
 export default router;
