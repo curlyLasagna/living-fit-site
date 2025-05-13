@@ -18,15 +18,6 @@ export const membershipStatus = pgEnum('membership_status', ['active', 'terminat
 export const qrStatus = pgEnum('qr_status', ['active', 'revoked', 'expired']);
 export const reportStatus = pgEnum('report_status', ['open', 'in_progress', 'closed']);
 export const familyMemberActions = pgEnum('familyMemberActions', ['remove', 'add']);
-export const modificationTypes = pgEnum('modification_types', [
-  'personal_info',
-  'contact_info',
-  'membership_status',
-  'payment_info',
-  'location_change',
-  'password_change',
-  'family_member_update'
-]);
 export const transactionType = pgEnum('transaction_type', [
   'monthly fee',
   'guest fee',
@@ -55,20 +46,6 @@ export const fees = pgTable('fees', {
 });
 export type Fee = InferSelectModel<typeof fees>;
 export type NewFee = InferInsertModel<typeof fees>;
-
-// FEE_CHANGES
-/*
-export const feeChanges = pgTable('fee_changes', {
-  feeChangeId: serial('fee_change_id').primaryKey(),
-  locationId: integer('location_id').references(() => locations.locationId),
-  feeType: varchar('fee_type', { length: 50 }),
-  oldValue: decimal('old_value'),
-  newValue: decimal('new_value'),
-  changeDate: timestamp('change_date').defaultNow(),
-});
-export type FeeChange = InferSelectModel<typeof feeChanges>;
-export type NewFeeChange = InferInsertModel<typeof feeChanges>;
-*/
 
 // MEMBERS
 export const members = pgTable("members", {
@@ -110,36 +87,6 @@ export const qrCodes = pgTable('qr_codes', {
 export type QrCode = InferSelectModel<typeof qrCodes>;
 export type NewQrCode = InferInsertModel<typeof qrCodes>;
 
-// MEMBERSHIP_CHANGES
-/*
-export const membershipChanges = pgTable('membership_changes', {
-  changeId: serial('change_id').primaryKey(),
-  memberId: integer('member_id').references(() => members.memberId, { onDelete: "no action" }),
-  changeType: varchar('change_type', { length: 50 }),
-  oldValue: text('old_value'),
-  newValue: text('new_value'),
-  changeDate: date('change_date').defaultNow(),
-});
-export type MembershipChange = InferSelectModel<typeof membershipChanges>;
-export type NewMembershipChange = InferInsertModel<typeof membershipChanges>;
-*/
-
-// MODIFICATIONS
-/*
-export const member_modifications = pgTable('member_modifications', {
-  modificationId: serial('modification_id').primaryKey(),
-  memberId: integer('member_id').references(() => members.memberId),
-  modificationType: modificationTypes('modification_type'),
-  fieldModified: varchar('field_modified', { length: 255 }),
-  oldValue: text('old_value'),
-  newValue: text('new_value'),
-  modificationDate: timestamp('modification_date').defaultNow(),
-});
-
-export type MemberModification = InferSelectModel<typeof member_modifications>;
-export type NewMemberModification = InferInsertModel<typeof member_modifications>;
-*/
-
 // REPORTS
 export const reports = pgTable('reports', {
   reportId: serial('report_id').primaryKey(),
@@ -162,32 +109,6 @@ export const staff = pgTable('staff', {
 });
 export type Staff = InferSelectModel<typeof staff>;
 export type NewStaff = InferInsertModel<typeof staff>;
-
-// STAFF_LOGS
-/*
-export const staffLogs = pgTable('staff_logs', {
-  logId: serial('log_id').primaryKey(),
-  staffId: integer('staff_id').references(() => staff.staffId),
-  action: varchar('action', { length: 255 }).notNull(),
-  timestamp: timestamp('timestamp').defaultNow(),
-  details: text('details'),
-});
-export type StaffLog = InferSelectModel<typeof staffLogs>;
-export type NewStaffLog = InferInsertModel<typeof staffLogs>;
-*/
-
-// FAMILY_MEMBER_LOGS
-/*
-export const familyMemberLogs = pgTable('family_member_logs', {
-  logId: serial('log_id').primaryKey(),
-  familyMemberId: integer('family_member_id').references(() => familyMembers.familyMemberId, { onDelete: 'cascade' }),
-  parentMemberId: integer('parent_member_id').references(() => members.memberId),
-  action: familyMemberActions('familyMemberActions'),
-  timestamp: timestamp('timestamp').defaultNow(),
-});
-export type FamilyMemberLog = InferSelectModel<typeof familyMemberLogs>;
-export type NewFamilyMemberLog = InferInsertModel<typeof familyMemberLogs>;
-*/
 
 // PAYMENT_INFORMATION
 export const paymentInformation = pgTable('payment_information', {
