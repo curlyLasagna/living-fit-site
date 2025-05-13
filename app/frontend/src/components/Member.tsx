@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CancelMembershipButton from "./CancelMembershipButton";
 
 type UserProps = {
     memberId: number;
@@ -42,6 +43,9 @@ const UserDetails: React.FC<UserProps> = ({ memberId }) => {
                         ))}
                     </tbody>
                 </table>
+                <div className="mt-4">
+                    <CancelMembershipButton memberId={memberId} />
+                </div>
             </div>
         </div>
     );
